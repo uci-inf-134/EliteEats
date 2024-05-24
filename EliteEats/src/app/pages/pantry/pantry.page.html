@@ -1,13 +1,43 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>pantry</ion-title>
+    <ion-title>Pantry</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">pantry</ion-title>
+      <ion-title size="large">Pantry</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button>Select All</ion-button>
+    </ion-buttons>
+    <ion-buttons slot="start">
+      <ion-button>Delete</ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button> Add to Shopping List </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Pantry Inventory</ion-card-title>
+    </ion-card-header>
+    <ion-list>
+      <ion-item>
+        List is Empty.
+      </ion-item>
+    </ion-list>
+  </ion-card>
+
+  <ion-fab horizontal="center" vertical="bottom" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
 </ion-content>
