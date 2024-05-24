@@ -8,16 +8,20 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
-        path: 'tab1',
-        loadChildren: () => import('../tab1/tab1.module').then(m => m.Tab1PageModule)
+        path: 'home',
+        loadChildren: () => import('../home/home.module').then(m => m.HomePageModule)
       },
       {
-        path: 'tab2',
-        loadChildren: () => import('../tab2/tab2.module').then(m => m.Tab2PageModule)
+        path: 'pantry',
+        loadChildren: () => import('../pantry/pantry.module').then(m => m.PantryPageModule)
       },
       {
-        path: 'tab3',
-        loadChildren: () => import('../tab3/tab3.module').then(m => m.Tab3PageModule)
+        path: 'shopping',
+        loadChildren: () => import('../shopping/shopping.module').then(m => m.ShoppingPageModule)
+      },
+      {
+        path: 'expiration',
+        loadChildren: () => import('../expiration/expiration.module').then(m => m.ExpirationPageModule)
       },
       {
         path: '',
@@ -28,7 +32,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: '/tabs/tab1',
+    redirectTo: '/tabs/home',
     pathMatch: 'full'
   }
 ];
