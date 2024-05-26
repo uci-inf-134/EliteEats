@@ -1,6 +1,5 @@
 Setup:
 1. npm install & npm update as needed
-2. npm install bootstrap
 2. ionic serve --open
 
 ionic help
