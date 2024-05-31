@@ -19,7 +19,7 @@
       <ion-button>Delete</ion-button>
     </ion-buttons>
     <ion-buttons slot="end">
-      <ion-button> Add to Shopping List </ion-button>
+      <ion-button id="pantryAddModal" (click)="addPantryItem()"> Add to Shopping List </ion-button>
     </ion-buttons>
   </ion-toolbar>
 
@@ -35,7 +35,7 @@
   </ion-card>
 
   <ion-fab horizontal="center" vertical="bottom" slot="fixed">
-    <ion-fab-button>
+    <ion-fab-button id="pantryAddModal" (click)="addPantryItem()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
