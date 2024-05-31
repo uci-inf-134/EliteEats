@@ -17,7 +17,11 @@ export class HomePage implements OnInit {
   ngOnInit() {
   }
 
-  navigatePantryAdd(){
+  navigateToPantry(){
+    this.r.navigate(['/tabs/pantry']);
+  }
+
+  navigateToPantryAdd(){
     this.r.navigate(['/tabs/pantry'], { queryParams: { addItem: 'true' }});
   }
 }
