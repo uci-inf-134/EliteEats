@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonModal } from '@ionic/angular';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 // import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
@@ -24,14 +24,17 @@ export class PantryPage implements OnInit {
   public toolbar: string = 'pantry'; // default toolbar vs selected toolbar
   
   public readonly categories: string[] = FoodItem.categories; // used for UI dividers
+  private modalOpened: boolean = false;
 
-  constructor(private route: ActivatedRoute, private mc:ModalController) {}
+  constructor(private route: ActivatedRoute, private router:Router, private mc:ModalController) {}
 
   ngOnInit() {
     // If navigated from home page, opens Add Item Modal
-    this.route.queryParams.subscribe(params => {
-      if (params['addItem'] === 'true') {
-        this.addPantryItem();
+    this.route.queryParams.subscribe(async params => {
+      if (params['addItem'] === 'true' && !this.modalOpened) {
+        this.modalOpened = true;
+        await this.addPantryItem();
+        this.clearQueryParams();
       }
     });
 
@@ -85,6 +88,15 @@ export class PantryPage implements OnInit {
       this.pantryItems.set(item.category, []);
     }
     this.pantryItems.get(item.category)!.push(item);
+  }
+
+  clearQueryParams() {
+    // Clear the query parameters after opening the modal
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { addItem: null },
+      queryParamsHandling: 'merge'
+    });
   }
 
   get pantryIsOccupied(){ 
