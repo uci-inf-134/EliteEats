@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonModal } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
-// import { Component, OnInit } from '@angular/core';
+
 import { ModalController } from '@ionic/angular';
 
 import { FoodItem } from 'src/app/data/food-item';
@@ -31,7 +31,7 @@ export class PantryPage implements OnInit {
   ngOnInit() {
     // If navigated from home page, opens Add Item Modal
     this.route.queryParams.subscribe(async params => {
-      if (params['addItem'] === 'true' && !this.modalOpened) {
+      if (params['addItem'] === 'true') {
         this.modalOpened = true;
         await this.addPantryItem();
         this.clearQueryParams();
@@ -61,12 +61,8 @@ export class PantryPage implements OnInit {
       const fi = new FoodItem(data.name, data.category, data.expirationDate);
       this.addToCategory(fi);
     });
+    /** end of static data. DELETE LATER DELETE LATER */
 
-  }
-
-  public addItem() {
-    console.log(this.addedItemName);
-    this.modal.dismiss(null, 'cancel');
   }
 
   async addPantryItem(){
@@ -101,6 +97,11 @@ export class PantryPage implements OnInit {
 
   get pantryIsOccupied(){ 
     return this.pantryItems.size > 0 ? true : false; 
+  }
+
+  public addItem() {
+    console.log(this.addedItemName);
+    this.modal.dismiss(null, 'cancel');
   }
 
   public pantryHasCategory(category: string): boolean {
