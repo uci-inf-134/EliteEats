@@ -11,7 +11,9 @@ import { AddPantryItemModalComponent } from 'src/app/components/add-pantry-item-
   styleUrls: ['./pantry.page.scss'],
 })
 export class PantryPage implements OnInit {
-  private pantryItems: FoodItem[] = [];
+  private pantryItems: Map<string, FoodItem[]> = new Map();
+  
+  public readonly categories: string[] = FoodItem.categories;
 
   constructor(private mc:ModalController) {}
 
@@ -27,10 +29,27 @@ export class PantryPage implements OnInit {
     const{data, role} = await modal.onWillDismiss();
 
     if (role === 'confirm'){
-      // add foodItem from modal to pantryItems array
-      this.pantryItems.push(data);
+      // add foodItem from modal to organized pantryItems map
+      this.addToCategory(data);
     }
   }
 
+  private addToCategory(item: FoodItem){
+    if (!this.pantryItems.has(item.category)){
+      this.pantryItems.set(item.category, []);
+    }
+    this.pantryItems.get(item.category)!.push(item);
+  }
 
+  get pantryIsOccupied(){ 
+    return this.pantryItems.size > 0 ? true : false; 
+  }
+
+  public pantryHasCategory(category: string): boolean {
+    return this.pantryItems.has(category) && this.pantryItems.get(category)!.length > 0;
+  }
+
+  public getItemsByCategory(category: string): FoodItem[] {
+    return this.pantryItems.get(category) || [];
+  }
 }
