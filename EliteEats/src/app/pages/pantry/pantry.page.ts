@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonModal } from '@ionic/angular';
+import { ActivatedRoute } from '@angular/router';
 // import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
@@ -17,15 +18,23 @@ export class PantryPage implements OnInit {
   public addedItemName:String = '';
   private pantryItems: Map<string, FoodItem[]> = new Map();
   
+  // conditionals for UI components
   public itemSelected: number = 0;
   public allSelected: boolean = false;
   public toolbar: string = 'pantry'; // default toolbar vs selected toolbar
   
-  public readonly categories: string[] = FoodItem.categories;
+  public readonly categories: string[] = FoodItem.categories; // used for UI dividers
 
-  constructor(private mc:ModalController) {}
+  constructor(private route: ActivatedRoute, private mc:ModalController) {}
 
   ngOnInit() {
+    // If navigated from home page, opens Add Item Modal
+    this.route.queryParams.subscribe(params => {
+      if (params['addItem'] === 'true') {
+        this.addPantryItem();
+      }
+    });
+
     /** STATIC DATA FOR TESTING */
     const itemData = [
       { name: 'Apple', category: 'Fruits', expirationDate: new Date('2024-06-30') },
@@ -129,6 +138,10 @@ export class PantryPage implements OnInit {
   }
 
   switchToolbar() {
+    /**
+     * If at least one item is selected, show selected menu
+     * When user presses back button, show default menu
+     */
     this.toolbar == 'pantry' ? this.toolbar = 'select' : this.toolbar = 'pantry';
   }
 }
