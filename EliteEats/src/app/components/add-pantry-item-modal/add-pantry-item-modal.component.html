@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Add Pantry Item</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="addItemForm" (ngSubmit)="addItem()">
+  <ion-item>
+    <ion-input 
+      label="Name"
+      labelPlacement="stacked" 
+      placeholder="Name"
+      formControlName="name"
+      ></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-select 
+      label="Category" 
+      labelPlacement="stacked" 
+      placeholder="Category"
+      formControlName="category"
+      >
+      <ion-select-option *ngFor="let category of categories" [value]="category">{{category}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-grid>
+      <ion-row>
+        Expiration Period
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-input 
+            label="Amount" 
+            labelPlacement="stacked" 
+            placeholder="0" 
+            type="number"
+            formControlName="expirationAmount"
+            ></ion-input>
+        </ion-col>
+        <ion-col>
+          <ion-select 
+            label="Units" 
+            labelPlacement="stacked" 
+            placeholder="days"
+            formControlName="expirationUnit"
+            >
+            <ion-select-option *ngFor="let unit of expirationPeriods" [value]="unit">{{unit}}</ion-select-option>
+          </ion-select>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+  </form>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button slot="start" (click)="close()">Close</ion-button>
+    <ion-button slot="end" type="submit" (click)="addItem()" [disabled]="!addItemForm.valid">Add Item to Pantry</ion-button>
+  </ion-toolbar>
+</ion-footer>
