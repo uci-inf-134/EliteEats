@@ -16,8 +16,10 @@ export class PantryPage implements OnInit {
   @ViewChild(IonModal) modal!: IonModal;
   public addedItemName:String = '';
   private pantryItems: Map<string, FoodItem[]> = new Map();
+  
   public itemSelected: number = 0;
   public allSelected: boolean = false;
+  public toolbar: string = 'pantry'; // default toolbar vs selected toolbar
   
   public readonly categories: string[] = FoodItem.categories;
 
@@ -88,10 +90,6 @@ export class PantryPage implements OnInit {
     return this.pantryItems.get(category) || [];
   }
 
-  public deleteItem(category: string, index: any): void{
-    this.pantryItems.get(category)!.splice(index, 1);
-  }
-
   public updateSelection(item: FoodItem){
     // change checked status from previous state
     // selected --> non-selected, non-selected --> selected
@@ -109,5 +107,28 @@ export class PantryPage implements OnInit {
       FoodItem.selectedAll(itemsArray, state);
     })
     this.allSelected = state;
+
+    // update count of selected entries
+    this.itemSelected = this.pantryItems.size + 1;
+  }
+
+  public deleteItem(category: string, index: any): void{
+    this.pantryItems.get(category)!.splice(index, 1);
+  }
+
+  public deleteSelected(){
+    this.pantryItems.forEach((itemsArray: FoodItem[], category: string) => {
+      itemsArray.forEach((item, index) => {
+        for (let i = itemsArray.length - 1; i >= 0; i--) {
+          if (itemsArray[i].selected) {
+            this.deleteItem(category, i);
+          }
+        }
+      });
+    })
+  }
+
+  switchToolbar() {
+    this.toolbar == 'pantry' ? this.toolbar = 'select' : this.toolbar = 'pantry';
   }
 }
