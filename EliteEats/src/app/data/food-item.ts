@@ -3,6 +3,7 @@ export class FoodItem {
     category:string;
     expirationStart:Date;
     expirationEnd:Date;
+    selected:Boolean;
 
     public static categories: string[] = [
         'Fruits',
@@ -28,10 +29,17 @@ export class FoodItem {
         'year(s)'
     ]
 
-    constructor(name:string, category:string, expirationEnd:Date, expirationStart?: Date){
+    constructor(name:string, category:string, expirationEnd:Date){
         this.name = name;
         this.category = category;
         this.expirationStart = new Date();
         this.expirationEnd = expirationEnd;
+        this.selected = false;
+    }
+
+    static selectedAll(items: FoodItem[], state: boolean):void {
+        items.forEach(item => {
+            item.selected = state;
+        })
     }
 }
