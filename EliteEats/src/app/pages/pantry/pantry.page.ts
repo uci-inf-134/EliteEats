@@ -15,13 +15,13 @@ import { AddPantryItemModalComponent } from 'src/app/components/add-pantry-item-
 })
 export class PantryPage implements OnInit {
   @ViewChild(IonModal) modal!: IonModal;
-  public addedItemName:String = '';
   private pantryItems: Map<string, FoodItem[]> = new Map();
   
   // conditionals for UI components
-  public itemSelected: number = 0;
-  public allSelected: boolean = false;
-  public toolbar: string = 'pantry'; // default toolbar vs selected toolbar
+  public itemsSelected: number = 0;
+  public totalEntries: number = 0;
+  public toolbarState: string = 'pantry'; // default toolbar vs selected toolbar
+  public pantryIsOccupied: boolean = false;
   
   public readonly categories: string[] = FoodItem.categories; // used for UI dividers
   private modalOpened: boolean = false;
@@ -84,6 +84,10 @@ export class PantryPage implements OnInit {
       this.pantryItems.set(item.category, []);
     }
     this.pantryItems.get(item.category)!.push(item);
+    this.totalEntries++;
+
+    // if adding first item, change occupiedStatus to true
+    if (this.totalEntries == 1){ this.pantryIsOccupied = true; }
   }
 
   clearQueryParams() {
@@ -95,15 +99,6 @@ export class PantryPage implements OnInit {
     });
   }
 
-  get pantryIsOccupied(){ 
-    return this.pantryItems.size > 0 ? true : false; 
-  }
-
-  public addItem() {
-    console.log(this.addedItemName);
-    this.modal.dismiss(null, 'cancel');
-  }
-
   public pantryHasCategory(category: string): boolean {
     return this.pantryItems.has(category) && this.pantryItems.get(category)!.length > 0;
   }
@@ -113,29 +108,36 @@ export class PantryPage implements OnInit {
   }
 
   public updateSelection(item: FoodItem){
-    // change checked status from previous state
-    // selected --> non-selected, non-selected --> selected
+    // checked <--> unchecked
     item.selected != item.selected;
 
-    // if item is selected, add to counter
-    item.selected ? this.itemSelected++ : this.itemSelected--;
+    // if item is selected, add to counter, else deduct
+    item.selected ? this.itemsSelected++ : this.itemsSelected--;
 
-    // Check if list contains at least 1 selected option (used to know if other menu should be shown)
-    console.log(this.itemSelected);
+    // once the first item is selected, the toolbar will be set to select until the user presses back
+    if (this.itemsSelected = 1){ this.setToolbar('select'); }
   }
 
   public selectAll(state: boolean): void {
     this.pantryItems.forEach((itemsArray: FoodItem[]) => {
       FoodItem.selectedAll(itemsArray, state);
     })
-    this.allSelected = state;
 
     // update count of selected entries
-    this.itemSelected = this.pantryItems.size + 1;
+    state ? this.itemsSelected = this.totalEntries : this.itemsSelected = 0;
   }
 
   public deleteItem(category: string, index: any): void{
     this.pantryItems.get(category)!.splice(index, 1);
+    this.totalEntries--;
+
+    // if deleting item removed last element, change occupiedStatus to false
+    if (this.totalEntries == 0){ 
+      this.pantryIsOccupied = false; 
+
+      // since there is nothing to select, exit select toolbar
+      this.setToolbar('pantry');
+    }
   }
 
   public deleteSelected(){
@@ -150,11 +152,7 @@ export class PantryPage implements OnInit {
     })
   }
 
-  switchToolbar() {
-    /**
-     * If at least one item is selected, show selected menu
-     * When user presses back button, show default menu
-     */
-    this.toolbar == 'pantry' ? this.toolbar = 'select' : this.toolbar = 'pantry';
+  public setToolbar(state: 'pantry' | 'select'){
+    this.toolbarState = state;
   }
 }
