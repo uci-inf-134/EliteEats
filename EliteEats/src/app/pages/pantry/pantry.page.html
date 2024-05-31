@@ -21,6 +21,29 @@
     </ion-grid>
   </ion-toolbar>
 
+  <ion-modal trigger="add-item-modal" >
+    <ng-template>
+      <ion-header>
+        <ion-title>Add Item to Pantry</ion-title>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-item>
+          <ion-input
+            label="Item Name"
+            labelPlacement="stacked"
+            type="text"
+            placeholder="Item"
+            [(ngModel)]="addedItemName"
+          ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-button (click)="addItem()">Submit</ion-button>
+        </ion-item>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+  
+  <!-- <ion-card> -->
   <!-- Pantry is empty card-->
   <ion-card *ngIf="!pantryIsOccupied">
     <ion-card-header>

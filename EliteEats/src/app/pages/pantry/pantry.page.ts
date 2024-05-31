@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { IonModal } from '@ionic/angular';
+// import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
 import { FoodItem } from 'src/app/data/food-item';
@@ -11,6 +13,8 @@ import { AddPantryItemModalComponent } from 'src/app/components/add-pantry-item-
   styleUrls: ['./pantry.page.scss'],
 })
 export class PantryPage implements OnInit {
+  @ViewChild(IonModal) modal!: IonModal;
+  public addedItemName:String = '';
   private pantryItems: Map<string, FoodItem[]> = new Map();
   public itemSelected: number = 0;
   public allSelected: boolean = false;
@@ -44,6 +48,11 @@ export class PantryPage implements OnInit {
       this.addToCategory(fi);
     });
 
+  }
+
+  public addItem() {
+    console.log(this.addedItemName);
+    this.modal.dismiss(null, 'cancel');
   }
 
   async addPantryItem(){
