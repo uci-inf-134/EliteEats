@@ -19,7 +19,7 @@ export class AddPantryItemModalComponent  implements OnInit {
     this.addItemForm = fb.group({
       name: ['', Validators.required],
       category: ['', Validators.required],
-      expirationAmount: ['', Validators.required],
+      expirationAmount: ['', [Validators.required, Validators.min(1)]],
       expirationUnit: ['', Validators.required],
     })
   }
