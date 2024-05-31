@@ -4,6 +4,8 @@ export class FoodItem {
     expirationStart:Date;
     expirationEnd:Date;
     selected:Boolean;
+    daysUntilExpire: number;
+    
 
     public static categories: string[] = [
         'Fruits',
@@ -35,6 +37,10 @@ export class FoodItem {
         this.expirationStart = new Date();
         this.expirationEnd = expirationEnd;
         this.selected = false;
+
+        const dateDifference = expirationEnd.valueOf() - this.expirationStart.valueOf(); // calc in ms
+        const msInDay = 1000 * 60 * 60 * 24;
+        this.daysUntilExpire = Math.floor(dateDifference / msInDay);
     }
 
     static selectedAll(items: FoodItem[], state: boolean):void {
