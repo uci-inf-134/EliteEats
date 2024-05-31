@@ -48,7 +48,6 @@ export class FoodItem {
         const msInDay = 1000 * 60 * 60 * 24;
         this.daysUntilExpire = Math.floor(dateDifference / msInDay);
         this.expColor = this.getColor(this.daysUntilExpire);
-        console.log(this.expColor)
     }
 
     static selectedAll(items: FoodItem[], state: boolean):void {
