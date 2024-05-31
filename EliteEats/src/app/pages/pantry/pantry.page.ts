@@ -5,6 +5,7 @@ import { ModalController } from '@ionic/angular';
 
 import { FoodItem } from 'src/app/data/food-item';
 import { AddPantryItemModalComponent } from 'src/app/components/add-pantry-item-modal/add-pantry-item-modal.component';
+import { ShoppingService } from 'src/app/services/shopping.service';
 
 
 @Component({
@@ -25,7 +26,7 @@ export class PantryPage implements OnInit {
   public readonly categories: string[] = FoodItem.categories; // used for UI dividers
   private modalOpened: boolean = false;
 
-  constructor(private route: ActivatedRoute, private router:Router, private mc:ModalController) {}
+  constructor(private route: ActivatedRoute, private router:Router, private mc:ModalController, private shoppingService: ShoppingService) {}
 
   ngOnInit() {
     // If navigated from home page, opens Add Item Modal
@@ -157,5 +158,14 @@ export class PantryPage implements OnInit {
 
   public setToolbar(state: 'pantry' | 'select'){
     this.toolbarState = state;
+  }
+
+  // Experimental Shopping List Functions
+  public addToShoppingList(item: FoodItem) {
+    this.shoppingService.addItemToList(item);
+  }
+
+  public test() {
+    console.log(this.shoppingService.getShoppingList());
   }
 }
