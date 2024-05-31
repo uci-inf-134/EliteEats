@@ -21,6 +21,7 @@ export class PantryPage implements OnInit {
   public itemsSelected: number = 0;
   public totalEntries: number = 0;
   public toolbarState: string = 'pantry'; // default toolbar vs selected toolbar
+  public selectState: string = 'selectAll';
   public pantryIsOccupied: boolean = false;
   
   public readonly categories: string[] = FoodItem.categories; // used for UI dividers
@@ -108,14 +109,13 @@ export class PantryPage implements OnInit {
   }
 
   public updateSelection(item: FoodItem){
-    // checked <--> unchecked
-    item.selected != item.selected;
-
+    // NgModel in HTML updates checked <--> unchecked states
     // if item is selected, add to counter, else deduct
     item.selected ? this.itemsSelected++ : this.itemsSelected--;
+    console.log(this.itemsSelected);
 
     // once the first item is selected, the toolbar will be set to select until the user presses back
-    if (this.itemsSelected = 1){ this.setToolbar('select'); }
+    if (this.itemsSelected == 1){ this.setToolbar('select'); }
   }
 
   public selectAll(state: boolean): void {
@@ -125,6 +125,7 @@ export class PantryPage implements OnInit {
 
     // update count of selected entries
     state ? this.itemsSelected = this.totalEntries : this.itemsSelected = 0;
+    this.itemsSelected == this.totalEntries ? this.setSelectState('deselectAll') : this.setSelectState('selectAll');
   }
 
   public deleteItem(category: string, index: any): void{
@@ -150,6 +151,10 @@ export class PantryPage implements OnInit {
         }
       });
     })
+  }
+
+  public setSelectState(state: 'selectAll' | 'deselectAll'){
+    this.selectState = state;
   }
 
   public setToolbar(state: 'pantry' | 'select'){
