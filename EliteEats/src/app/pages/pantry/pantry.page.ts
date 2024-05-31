@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { IonModal } from '@ionic/angular';
 
 @Component({
   selector: 'app-pantry',
@@ -6,10 +7,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./pantry.page.scss'],
 })
 export class PantryPage implements OnInit {
+  @ViewChild(IonModal) modal!: IonModal;
+  public addedItemName:String = '';
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  public addItem() {
+    console.log(this.addedItemName);
+    this.modal.dismiss(null, 'cancel');
   }
 
 }
