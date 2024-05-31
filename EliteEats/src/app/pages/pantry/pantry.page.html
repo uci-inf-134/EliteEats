@@ -12,7 +12,7 @@
     <ion-toolbar *ngIf="toolbarState == 'select'">
       <ion-grid>
         <ion-row>
-          <ion-button fill="clear" (click)="setToolbar('pantry')"><ion-icon name="arrow-back-outline"></ion-icon></ion-button>
+          <ion-button fill="clear" (click)="selectAll(false); setToolbar('pantry')"><ion-icon name="arrow-back-outline"></ion-icon></ion-button>
         </ion-row>
       </ion-grid>
       <ion-button *ngIf="selectState == 'selectAll'" (click)="selectAll(true)">Select All</ion-button>
