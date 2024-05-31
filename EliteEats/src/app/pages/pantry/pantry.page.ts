@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonModal } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { ModalController } from '@ionic/angular';
@@ -14,7 +13,6 @@ import { AddPantryItemModalComponent } from 'src/app/components/add-pantry-item-
   styleUrls: ['./pantry.page.scss'],
 })
 export class PantryPage implements OnInit {
-  @ViewChild(IonModal) modal!: IonModal;
   private pantryItems: Map<string, FoodItem[]> = new Map();
   
   // conditionals for UI components
@@ -41,16 +39,16 @@ export class PantryPage implements OnInit {
 
     /** STATIC DATA FOR TESTING */
     const itemData = [
-      { name: 'Apple', category: 'Fruits', expirationDate: new Date('2024-06-30') },
+      { name: 'Apple', category: 'Fruits', expirationDate: new Date('2024-06-4') },
       { name: 'Banana', category: 'Fruits', expirationDate: new Date('2024-06-30') },
-      { name: 'Spinach', category: 'Vegetables', expirationDate: new Date('2024-06-25') },
-      { name: 'Milk', category: 'Dairy', expirationDate: new Date('2024-06-28') },
+      { name: 'Spinach', category: 'Vegetables', expirationDate: new Date('2024-06-3') },
+      { name: 'Milk', category: 'Dairy', expirationDate: new Date('2024-06-1') },
       { name: 'Beef', category: 'Meats', expirationDate: new Date('2024-07-02') },
       { name: 'Salmon', category: 'Seafood', expirationDate: new Date('2024-07-05') },
-      { name: 'Rice', category: 'Grains and Cereals', expirationDate: new Date('2024-07-10') },
+      { name: 'Rice', category: 'Grains and Cereals', expirationDate: new Date('2024-07-15') },
       { name: 'Bread', category: 'Bread and Bakery', expirationDate: new Date('2024-07-12') },
       { name: 'Pasta', category: 'Pantry Goods', expirationDate: new Date('2024-07-15') },
-      { name: 'Ice Cream', category: 'Frozen Foods', expirationDate: new Date('2024-07-20') },
+      { name: 'Ice Cream', category: 'Frozen Foods', expirationDate: new Date('2024-06-07') },
       { name: 'Orange Juice', category: 'Beverages', expirationDate: new Date('2024-07-25') },
       { name: 'Chips', category: 'Snacks', expirationDate: new Date('2024-07-28') },
       { name: 'Ketchup', category: 'Condiments', expirationDate: new Date('2024-08-01') },
