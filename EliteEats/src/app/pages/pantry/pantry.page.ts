@@ -168,4 +168,10 @@ export class PantryPage implements OnInit {
   public test() {
     console.log(this.shoppingService.getShoppingList());
   }
+
+  public testAdd() {
+    for (let [_, items] of this.pantryItems) {
+      items.forEach((item) => this.addToShoppingList(item));
+    }
+  }
 }

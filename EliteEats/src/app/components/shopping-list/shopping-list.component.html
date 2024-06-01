@@ -1,3 +1,4 @@
+<div scrollY="true">
 <ion-list *ngIf="!isEmpty()">
   <ion-item *ngFor="let item of shoppingList">
     <ion-checkbox slot="start"></ion-checkbox>
@@ -8,6 +9,7 @@
       <ion-label>test</ion-label>
     </ion-item> -->
 </ion-list>
+</div>
 
 <ion-card *ngIf="isEmpty()">
   <h1>Shopping List is Empty</h1>
