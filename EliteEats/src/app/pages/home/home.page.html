@@ -27,15 +27,16 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-card (click)="navigateToPantry()">
+  <ion-card>
     <ion-card-header>
       <ion-card-title>
         <ion-icon name="briefcase-outline" aria-hidden="true"></ion-icon>
         Pantry
       </ion-card-title>
     </ion-card-header>
-      <!-- Add your card content here -->
-    <app-shopping-list></app-shopping-list>
+    <ion-card-content>
+      <app-pantry-list></app-pantry-list>
+    </ion-card-content>
   </ion-card>
 
   <!-- <ion-content style="max-height: 200px;">
@@ -53,6 +54,7 @@
     </ion-card-header>
     <ion-card-content>
       <!-- Add your card content here -->
+    <app-shopping-list></app-shopping-list>
     </ion-card-content>
   </ion-card>
 

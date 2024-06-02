@@ -5,6 +5,7 @@ import { ModalController } from '@ionic/angular';
 
 import { FoodItem } from 'src/app/data/food-item';
 import { AddPantryItemModalComponent } from 'src/app/components/add-pantry-item-modal/add-pantry-item-modal.component';
+import { PantryService } from 'src/app/services/pantry.service';
 import { ShoppingService } from 'src/app/services/shopping.service';
 
 
@@ -12,9 +13,10 @@ import { ShoppingService } from 'src/app/services/shopping.service';
   selector: 'app-pantry',
   templateUrl: './pantry.page.html',
   styleUrls: ['./pantry.page.scss'],
+  template: '{{PantryService.pantryItems}}'
 })
 export class PantryPage implements OnInit {
-  private pantryItems: Map<string, FoodItem[]> = new Map();
+  public pantryItems: Map<string, FoodItem[]> = new Map();
   
   // conditionals for UI components
   public itemsSelected: number = 0;
@@ -26,7 +28,13 @@ export class PantryPage implements OnInit {
   public readonly categories: string[] = FoodItem.categories; // used for UI dividers
   private modalOpened: boolean = false;
 
-  constructor(private route: ActivatedRoute, private router:Router, private mc:ModalController, private shoppingService: ShoppingService) {}
+  constructor(
+    private route: ActivatedRoute, 
+    private router:Router, 
+    private mc:ModalController, 
+    private shoppingService: ShoppingService, 
+    private ps: PantryService
+  ) {}
 
   ngOnInit() {
     // If navigated from home page, opens Add Item Modal
@@ -37,6 +45,10 @@ export class PantryPage implements OnInit {
         this.clearQueryParams();
       }
     });
+
+    this.pantryItems = this.ps.getPantryList();
+    this.totalEntries = this.pantryItems.size;
+    this.pantryIsOccupied = this.pantryItems.size > 0;
 
     /** STATIC DATA FOR TESTING */
     const itemData = [
@@ -80,6 +92,7 @@ export class PantryPage implements OnInit {
   }
 
   private addToCategory(item: FoodItem){
+    /**
     if (!this.pantryItems.has(item.category)){
       this.pantryItems.set(item.category, []);
     }
@@ -88,6 +101,15 @@ export class PantryPage implements OnInit {
 
     // if adding first item, change occupiedStatus to true
     if (this.totalEntries == 1){ this.pantryIsOccupied = true; }
+    */
+   this.ps.addPantryItem(item.category, item);
+   this.updatePantryState();
+  }
+
+  private updatePantryState() {
+    this.pantryItems = this.ps.getPantryList();
+    this.totalEntries = Array.from(this.pantryItems.values()).reduce((sum, items) => sum + items.length, 0);
+    this.pantryIsOccupied = this.totalEntries > 0;
   }
 
   clearQueryParams() {

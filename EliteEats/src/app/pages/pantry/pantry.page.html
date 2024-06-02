@@ -8,19 +8,26 @@
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
-    <ion-toolbar *ngIf="toolbarState == 'pantry'">
+    <ion-toolbar>
+      <!-- *ngIf="toolbarState == 'pantry'" -->
       <ion-title size="large">Pantry</ion-title>
     </ion-toolbar>
-    <ion-toolbar *ngIf="toolbarState == 'select'">
+
+    <ion-toolbar>
+      <!-- *ngIf="toolbarState == 'select'"
       <ion-grid>
         <ion-row>
           <ion-button fill="clear" (click)="selectAll(false); setToolbar('pantry')"><ion-icon name="arrow-back-outline"></ion-icon></ion-button>
         </ion-row>
-      </ion-grid>
-      <ion-button *ngIf="selectState == 'selectAll'" (click)="selectAll(true)">Select All</ion-button>
-      <ion-button *ngIf="selectState == 'deselectAll'" (click)="selectAll(false)">Deselect All</ion-button>
-      <ion-button (click)="deleteSelected()" color="danger">Delete</ion-button>
-      <ion-button color="success">Add to Shopping List</ion-button>
+        <ion-row>-->
+          <ion-buttons>
+            <ion-button *ngIf="selectState == 'selectAll'" (click)="selectAll(true)">Select All</ion-button>
+            <ion-button *ngIf="selectState == 'deselectAll'" (click)="selectAll(false)">Deselect All</ion-button>
+            <ion-button (click)="deleteSelected()" color="danger">Delete</ion-button>
+            <ion-button color="success">Add to Shopping List</ion-button>
+          </ion-buttons>
+        <!--</ion-row>
+      </ion-grid>-->
     </ion-toolbar>
   </ion-header>
 
@@ -61,8 +68,10 @@
           <!-- Name of item -->
           <ion-item>
             <ion-checkbox slot="start" [(ngModel)]="item.selected" (ionChange)="updateSelection(item)"></ion-checkbox>
-            <ion-label>{{ item.name }}</ion-label>
-            <ion-icon name="nutrition" [style.color]="item.expColor"></ion-icon>
+            <p style="font-size: medium;">{{ item.name }}</p>
+            <p slot="end" style="font-size: small;">Exp: ~{{item.daysUntilExpire}} day(s)</p>
+            <ion-icon *ngIf="item.daysUntilExpire > 0" slot="end" name="nutrition" [style.color]="item.expColor"></ion-icon>
+            <ion-icon *ngIf="item.daysUntilExpire <= 0" name="alert-outline" slot="end" [style.color]="'red'"></ion-icon>
           </ion-item>
 
           <!-- right-side sliders -->

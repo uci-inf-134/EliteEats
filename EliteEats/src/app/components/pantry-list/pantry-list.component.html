@@ -1,0 +1,22 @@
+<div scrollY="true" *ngIf="pantryItems.size">
+<!-- Creating card display for each category + its items -->
+<ion-card *ngFor="let category of categories">
+  <ion-card-header>
+    <ion-card-title>{{category}}</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-list>
+      <ion-item *ngFor="let item of getItemsByCategory(category)">
+        <p style="font-size: medium;">{{ item.name }}</p>
+            <p slot="end" style="font-size: small;">Exp: ~{{item.daysUntilExpire}} day(s)</p>
+            <ion-icon *ngIf="item.daysUntilExpire > 0" slot="end" name="nutrition" [style.color]="item.expColor"></ion-icon>
+            <ion-icon *ngIf="item.daysUntilExpire <= 0" name="alert-outline" slot="end" [style.color]="'red'"></ion-icon>
+      </ion-item>
+    </ion-list>
+  </ion-card-content>
+</ion-card>
+</div>
+
+<div *ngIf="!pantryItems.size">
+  <p>Pantry List is Empty.</p>
+</div>

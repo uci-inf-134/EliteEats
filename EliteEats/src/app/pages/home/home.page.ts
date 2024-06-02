@@ -2,9 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 
-import { AddPantryItemModalComponent } from 'src/app/components/add-pantry-item-modal/add-pantry-item-modal.component';
-import { PantryPage } from '../pantry/pantry.page';
-
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',

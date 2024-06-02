@@ -8,6 +8,7 @@ import { HomePageRoutingModule } from './home-routing.module';
 
 import { HomePage } from './home.page';
 import { ShoppingListComponent } from 'src/app/components/shopping-list/shopping-list.component';
+import { PantryListComponent } from 'src/app/components/pantry-list/pantry-list.component';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { ShoppingListComponent } from 'src/app/components/shopping-list/shopping
     FormsModule,
     IonicModule,
     HomePageRoutingModule,
-    ShoppingListComponent
+    ShoppingListComponent,
+    PantryListComponent
   ],
   declarations: [HomePage]
 })
