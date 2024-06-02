@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FoodItem } from 'src/app/data/food-item';
+import { ShoppingService } from 'src/app/services/shopping.service';
 
 @Component({
   selector: 'app-shopping',
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ShoppingPage implements OnInit {
 
-  constructor() { }
+  constructor(private shoppingService: ShoppingService) { }
 
   ngOnInit() {
+  }
+
+  // Method to get Shopping List
+  public getShoppingList(): Array<FoodItem> {
+    return this.shoppingService.getShoppingList();
   }
 
 }

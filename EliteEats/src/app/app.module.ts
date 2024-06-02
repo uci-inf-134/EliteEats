@@ -8,17 +8,18 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AddPantryItemModalComponent } from './components/add-pantry-item-modal/add-pantry-item-modal.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ShoppingListComponent } from './components/shopping-list/shopping-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AddPantryItemModalComponent
+    AddPantryItemModalComponent,
   ],
   imports: [
     BrowserModule, 
     IonicModule.forRoot(), 
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

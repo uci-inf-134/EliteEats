@@ -1,6 +1,8 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>Pantry</ion-title>
+    <ion-button (click)="test()">Test get list</ion-button>
+    <ion-button (click)="testAdd()">Test add</ion-button>
   </ion-toolbar>
 </ion-header>
 
@@ -66,7 +68,7 @@
           <!-- right-side sliders -->
           <ion-item-options side="end">
             <!--<ion-item-option>Option 2</ion-item-option>-->
-            <ion-item-option color="success">+ Shopping List</ion-item-option>
+            <ion-item-option color="success" (click)="addToShoppingList(item)">+ Shopping List</ion-item-option>
           </ion-item-options>
         </ion-item-sliding>
       </ion-item-group>
