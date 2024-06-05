@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 
 import { FoodItem } from 'src/app/data/food-item';
-import { AddPantryItemModalComponent } from 'src/app/components/add-pantry-item-modal/add-pantry-item-modal.component';
+import { AddPantryItemModalComponent } from 'src/app/components/modals/add-pantry-item-modal/add-pantry-item-modal.component';
 import { PantryService } from 'src/app/services/pantry.service';
 import { ShoppingService } from 'src/app/services/shopping.service';
 

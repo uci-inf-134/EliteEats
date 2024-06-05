@@ -11,6 +11,10 @@
 </ion-list>
 </div>
 
-<div *ngIf="isEmpty()">
-  <p>Pantry List is Empty.</p>
-</div>
+<ion-card *ngIf="isEmpty()">
+  <ion-list>
+    <ion-item>
+      List is Empty.
+    </ion-item>
+  </ion-list>
+</ion-card>

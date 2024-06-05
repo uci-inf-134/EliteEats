@@ -12,14 +12,11 @@
   </ion-header>
 
   <ion-toolbar>
-    <ion-buttons slot="start">
+    <ion-buttons>
       <ion-button>Select All</ion-button>
-    </ion-buttons>
-    <ion-buttons slot="start">
       <ion-button>Delete</ion-button>
-    </ion-buttons>
-    <ion-buttons slot="end">
-      <ion-button> Add to Shopping List </ion-button>
+      <ion-button>Add Item</ion-button>
+      <ion-button>Renew</ion-button>
     </ion-buttons>
   </ion-toolbar>
 
@@ -28,16 +25,10 @@
       <ion-card-title>Shopping List</ion-card-title>
     </ion-card-header>
     <app-shopping-list></app-shopping-list>
-    <!-- <ion-list>
-      <ion-item *ngFor="let item of getShoppingList()">
-        <ion-checkbox slot="start"></ion-checkbox>
-        <ion-label>{{item.name}}</ion-label>
-      </ion-item>
-    </ion-list> -->
   </ion-card>
 
   <ion-fab horizontal="center" vertical="bottom" slot="fixed">
-    <ion-fab-button>
+    <ion-fab-button id="pantryAddModal" (click)="addShoppingItem()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
