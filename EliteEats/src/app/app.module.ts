@@ -10,11 +10,12 @@ import { AddPantryItemModalComponent } from './components/add-pantry-item-modal/
 import { ReactiveFormsModule } from '@angular/forms';
 import { ShoppingListComponent } from './components/shopping-list/shopping-list.component';
 import { PantryListComponent } from './components/pantry-list/pantry-list.component';
+import { DragAndDropComponent } from './components/drag-and-drop/drag-and-drop.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AddPantryItemModalComponent
+    AddPantryItemModalComponent,
   ],
   imports: [
     BrowserModule, 

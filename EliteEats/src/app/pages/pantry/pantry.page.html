@@ -9,25 +9,16 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <!-- *ngIf="toolbarState == 'pantry'" -->
       <ion-title size="large">Pantry</ion-title>
     </ion-toolbar>
 
     <ion-toolbar>
-      <!-- *ngIf="toolbarState == 'select'"
-      <ion-grid>
-        <ion-row>
-          <ion-button fill="clear" (click)="selectAll(false); setToolbar('pantry')"><ion-icon name="arrow-back-outline"></ion-icon></ion-button>
-        </ion-row>
-        <ion-row>-->
           <ion-buttons>
             <ion-button *ngIf="selectState == 'selectAll'" (click)="selectAll(true)">Select All</ion-button>
             <ion-button *ngIf="selectState == 'deselectAll'" (click)="selectAll(false)">Deselect All</ion-button>
             <ion-button (click)="deleteSelected()" color="danger">Delete</ion-button>
             <ion-button color="success">Add to Shopping List</ion-button>
           </ion-buttons>
-        <!--</ion-row>
-      </ion-grid>-->
     </ion-toolbar>
   </ion-header>
 
@@ -38,8 +29,6 @@
     to test that thoroughly so i'm lazy lol.
   -->
   
-  <!-- <ion-card> -->
-  <!-- Pantry is empty card-->
   <ion-card *ngIf="!pantryIsOccupied">
     <ion-card-header>
       <ion-card-title>Pantry Inventory</ion-card-title>
@@ -84,11 +73,15 @@
     </ion-list>
   </div>
 
-  <!-- Add button on bottom of page -->
+  <!-- Drag and Drop -->
+  <ion-button class="drop-area" #trashDrop>Trash</ion-button>
+  <ion-button class="drop-area" #shoppingDrop>Add to Shopping List</ion-button>
+
+  <!-- Add button on bottom of page
   <ion-fab horizontal="center" vertical="bottom" slot="fixed">
     <ion-fab-button id="pantryAddModal" (click)="addPantryItem()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
-  </ion-fab>
+  </ion-fab>-->
 
 </ion-content>

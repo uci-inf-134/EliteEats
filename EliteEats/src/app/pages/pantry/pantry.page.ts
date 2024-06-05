@@ -1,7 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, QueryList } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
-import { ModalController } from '@ionic/angular';
+import { GestureController, IonItem, ModalController } from '@ionic/angular';
 
 import { FoodItem } from 'src/app/data/food-item';
 import { AddPantryItemModalComponent } from 'src/app/components/add-pantry-item-modal/add-pantry-item-modal.component';
@@ -16,12 +15,12 @@ import { ShoppingService } from 'src/app/services/shopping.service';
   template: '{{PantryService.pantryItems}}'
 })
 export class PantryPage implements OnInit {
+
   public pantryItems: Map<string, FoodItem[]> = new Map();
   
   // conditionals for UI components
   public itemsSelected: number = 0;
   public totalEntries: number = 0;
-  public toolbarState: string = 'pantry'; // default toolbar vs selected toolbar
   public selectState: string = 'selectAll';
   public pantryIsOccupied: boolean = false;
   
@@ -33,7 +32,8 @@ export class PantryPage implements OnInit {
     private router:Router, 
     private mc:ModalController, 
     private shoppingService: ShoppingService, 
-    private ps: PantryService
+    private ps: PantryService,
+    private gCtrl: GestureController,
   ) {}
 
   ngOnInit() {
@@ -92,16 +92,6 @@ export class PantryPage implements OnInit {
   }
 
   private addToCategory(item: FoodItem){
-    /**
-    if (!this.pantryItems.has(item.category)){
-      this.pantryItems.set(item.category, []);
-    }
-    this.pantryItems.get(item.category)!.push(item);
-    this.totalEntries++;
-
-    // if adding first item, change occupiedStatus to true
-    if (this.totalEntries == 1){ this.pantryIsOccupied = true; }
-    */
    this.ps.addPantryItem(item.category, item);
    this.updatePantryState();
   }
@@ -136,7 +126,7 @@ export class PantryPage implements OnInit {
     console.log(this.itemsSelected);
 
     // once the first item is selected, the toolbar will be set to select until the user presses back
-    if (this.itemsSelected == 1){ this.setToolbar('select'); }
+    // if (this.itemsSelected == 1){ this.setToolbar('select'); }
   }
 
   public selectAll(state: boolean): void {
@@ -156,9 +146,6 @@ export class PantryPage implements OnInit {
     // if deleting item removed last element, change occupiedStatus to false
     if (this.totalEntries == 0){ 
       this.pantryIsOccupied = false; 
-
-      // since there is nothing to select, exit select toolbar
-      this.setToolbar('pantry');
     }
   }
 
@@ -176,10 +163,6 @@ export class PantryPage implements OnInit {
 
   public setSelectState(state: 'selectAll' | 'deselectAll'){
     this.selectState = state;
-  }
-
-  public setToolbar(state: 'pantry' | 'select'){
-    this.toolbarState = state;
   }
 
   // Experimental Shopping List Functions
