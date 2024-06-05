@@ -199,18 +199,18 @@ export class PantryPage implements OnInit {
     }
   
     // single add
-    public addToShoppingList(item: FoodItem ) {
+    public addToShoppingList(item: FoodItem, category: string ) {
       if (!this.shoppingService.itemIsInList(item)) { 
-        this.shoppingService.addItem(item);
+        this.shoppingService.addItem(item, category);
       }
     }
   
     // batch add
     public addSelectedtoShopping() {
-      this.pantryItems.forEach((itemsArray: FoodItem[]) => {
+      this.pantryItems.forEach((itemsArray: FoodItem[], category: string) => {
         itemsArray.forEach((item) => {
           if (item.selected) {
-            this.addToShoppingList(item);
+            this.addToShoppingList(item, category);
           }
         });
       })

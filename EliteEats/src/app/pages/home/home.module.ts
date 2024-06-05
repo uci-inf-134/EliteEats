@@ -7,7 +7,6 @@ import { IonicModule } from '@ionic/angular';
 import { HomePageRoutingModule } from './home-routing.module';
 
 import { HomePage } from './home.page';
-import { ShoppingListComponent } from 'src/app/components/shopping-list/shopping-list.component';
 import { PantryService } from 'src/app/services/pantry.service';
 
 @NgModule({
@@ -16,7 +15,6 @@ import { PantryService } from 'src/app/services/pantry.service';
     FormsModule,
     IonicModule,
     HomePageRoutingModule,
-    ShoppingListComponent,
   ],
   declarations: [HomePage]
 })

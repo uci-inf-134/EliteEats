@@ -5,7 +5,7 @@ import { FoodItem } from '../data/food-item';
   providedIn: 'root'
 })
 export class ShoppingService implements OnInit {
-  private shoppingList: Array<FoodItem> = [];
+  private shoppingList: Map<string, FoodItem[]> = new Map();
 
   constructor() { }
 
@@ -13,22 +13,37 @@ export class ShoppingService implements OnInit {
   }
 
   // Method to Add Item to Shopping List
-  public addItem(item: FoodItem): void {
-    this.shoppingList.push(item);
+  public addItem(item: FoodItem, category: string): void {
+    if (!this.shoppingList.has(category)) {
+      this.shoppingList.set(category, []);
+    }
+    this.shoppingList.get(category)?.push(item);
   }
 
   // Method to Remove Item from Shopping List
-  public removeItem(item: FoodItem): void {
-    this.shoppingList = this.shoppingList.splice(this.shoppingList.indexOf(item), 1);
+  public removeItem(item: FoodItem, category: string): void {
+    if (this.shoppingList.has(category)) {
+      const items = this.shoppingList.get(category)!.filter(i => i !== item);
+      if (items.length > 0) {
+        this.shoppingList.set(category, items);
+      }
+      else {
+        this.shoppingList.delete(category);
+      }
+    }
   }
 
   // Method to get Entire List
-  public getShoppingList(): Array<FoodItem> {
+  public getShoppingList(): Map<string, FoodItem[]> {
     return this.shoppingList;
   }
 
   public itemIsInList(item: FoodItem): boolean {
-    // Returns T/F if item is in shopping list
-    return this.shoppingList.includes(item);
+    for (let items of this.shoppingList.values()) {
+      if (items.includes(item)) {
+        return true;
+      }
+    }
+    return false;
   }
 }
