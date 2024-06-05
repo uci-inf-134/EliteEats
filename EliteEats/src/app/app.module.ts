@@ -6,11 +6,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AddItemComponent } from './components/modals/add-item/add-item.component';
+import { ConfirmDeleteComponent } from './components/modals/confirm-delete/confirm-delete.component';
+import { ConfirmAddComponent } from './components/modals/confirm-add/confirm-add.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AddItemComponent
+    AddItemComponent,
+    ConfirmDeleteComponent,
+    ConfirmAddComponent
   ],
   imports: [
     BrowserModule, 

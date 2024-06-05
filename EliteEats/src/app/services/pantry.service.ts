@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { FoodItem } from '../data/food-item';
-import { PantryPage } from '../pages/pantry/pantry.page';
-import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'

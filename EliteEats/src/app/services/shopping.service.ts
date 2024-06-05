@@ -13,8 +13,13 @@ export class ShoppingService implements OnInit {
   }
 
   // Method to Add Item to Shopping List
-  public addItemToList(item: FoodItem): void {
+  public addItem(item: FoodItem): void {
     this.shoppingList.push(item);
+  }
+
+  // Method to Remove Item from Shopping List
+  public removeItem(item: FoodItem): void {
+    this.shoppingList = this.shoppingList.splice(this.shoppingList.indexOf(item), 1);
   }
 
   // Method to get Entire List

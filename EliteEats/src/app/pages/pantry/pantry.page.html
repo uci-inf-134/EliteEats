@@ -19,10 +19,10 @@
   -->
   <ion-toolbar>
     <ion-buttons>
-      <ion-button *ngIf="selectState == 'selectAll'" (click)="selectAll(true)">Select All</ion-button>
-      <ion-button *ngIf="selectState == 'deselectAll'" (click)="selectAll(false)">Deselect All</ion-button>
-      <ion-button (click)="deleteSelected()" color="danger">Delete</ion-button>
-      <ion-button (click)="addSelectedtoShopping()" color="success">Add to Shopping List</ion-button>
+      <ion-button *ngIf="selectState == 'selectAll'" (click)="selectAll(true)" [disabled]="!pantryIsOccupied">Select All</ion-button>
+      <ion-button *ngIf="selectState == 'deselectAll'" (click)="selectAll(false)" [disabled]="!pantryIsOccupied">Deselect All</ion-button>
+      <ion-button (click)="deleteSelected()" color="danger" [disabled]="!pantryIsOccupied">Delete</ion-button>
+      <ion-button (click)="addSelectedtoShopping()" color="success" [disabled]="!pantryIsOccupied">Add to Shopping List</ion-button>
     </ion-buttons>
   </ion-toolbar>
   

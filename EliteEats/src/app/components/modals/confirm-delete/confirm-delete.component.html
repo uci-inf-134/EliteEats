@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-card-title>Delete Items</ion-card-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+    <p>You've chosen to these {{itemsSelected.length}} items:</p>
+    <ion-list>
+      <ion-item *ngFor="let item of itemsSelected">
+        * {{ item.name }}
+      </ion-item>
+    </ion-list>
+    <p>This action is irreversible. Proceed?</p>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+      <ion-button (click)="close()">No</ion-button>
+      <ion-button color="danger" (click)="confirm()">Yes</ion-button>
+  </ion-toolbar>
+</ion-footer>

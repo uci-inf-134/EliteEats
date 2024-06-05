@@ -6,6 +6,7 @@ import { FoodItem } from 'src/app/data/food-item';
 import { PantryService } from 'src/app/services/pantry.service';
 import { ShoppingService } from 'src/app/services/shopping.service';
 import { AddItemComponent } from 'src/app/components/modals/add-item/add-item.component';
+import { ConfirmDeleteComponent } from 'src/app/components/modals/confirm-delete/confirm-delete.component';
 
 
 @Component({
@@ -144,19 +145,49 @@ export class PantryPage implements OnInit {
   
     // single delete
     public deleteItem(category: string, index: any): void{
+      const item: FoodItem = this.pantryItems.get(category)![index];
+
+      // remove item from pantry list and selected list
       this.pantryItems.get(category)!.splice(index, 1);
+      this.itemsSelected.splice(this.itemsSelected.indexOf(item), 1);
       this.totalEntries--;
   
       // if deleting item removed last element, change occupiedStatus to false
       if (this.totalEntries == 0){ 
         this.pantryIsOccupied = false; 
+        this.setSelectState('selectAll');
       }
     }
   
     // batch delete
-    public deleteSelected(){
+    async deleteSelected(){
+      // show warning module if > 1 item selected
+      if (this.itemsSelected.length == 1){
+        this.batchDelete();
+      }
+      else if (this.itemsSelected.length > 1){
+        const modal = await this.mc.create({
+          component: ConfirmDeleteComponent,
+          componentProps: {
+            itemsSelected: this.itemsSelected
+          }
+        });
+        modal.present();
+    
+        const{data, role} = await modal.onWillDismiss();
+    
+        if (role === 'confirm'){
+          this.batchDelete();
+        }
+      }
+      else {
+        throw new Error("Error: Negative Selection");
+      }
+    }
+
+    private batchDelete(): void{
       this.pantryItems.forEach((itemsArray: FoodItem[], category: string) => {
-        itemsArray.forEach((item, index) => {
+        itemsArray.forEach((item) => {
           for (let i = itemsArray.length - 1; i >= 0; i--) {
             if (itemsArray[i].selected) {
               this.deleteItem(category, i);
@@ -169,7 +200,7 @@ export class PantryPage implements OnInit {
     // single add
     public addToShoppingList(item: FoodItem ) {
       if (!this.shoppingService.itemIsInList(item)) { 
-        this.shoppingService.addItemToList(item);
+        this.shoppingService.addItem(item);
       }
     }
   

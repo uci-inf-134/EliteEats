@@ -53,7 +53,7 @@ export class ShoppingPage implements OnInit {
     const{data, role} = await modal.onWillDismiss();
 
     if (role === 'confirm'){
-      this.shoppingService.addItemToList(data);
+      this.shoppingService.addItem(data);
     }
   }
 
