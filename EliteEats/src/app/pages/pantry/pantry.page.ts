@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { GestureController, IonItem, ModalController } from '@ionic/angular';
 
 import { FoodItem } from 'src/app/data/food-item';
-import { AddPantryItemModalComponent } from 'src/app/components/add-pantry-item-modal/add-pantry-item-modal.component';
 import { PantryService } from 'src/app/services/pantry.service';
 import { ShoppingService } from 'src/app/services/shopping.service';
 import { AddItemComponent } from 'src/app/components/modals/add-item/add-item.component';
@@ -81,7 +80,7 @@ export class PantryPage implements OnInit {
     const modal = await this.mc.create({
       component: AddItemComponent,
       componentProps: {
-        modalTitle: 'Add Item to Pantry'
+        modalType: 'Pantry'
       }
     });
     modal.present();

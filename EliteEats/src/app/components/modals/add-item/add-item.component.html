@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>{{ modalTitle }}</ion-title>
+    <ion-title>Add Item to {{ modalType }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -60,6 +60,6 @@
 <ion-footer>
   <ion-toolbar>
     <ion-button slot="start" (click)="close()" color="danger">Close</ion-button>
-    <ion-button slot="end" type="submit" (click)="addItem()" [disabled]="!addItemForm.valid" color="success">Add Item to Pantry</ion-button>
+    <ion-button slot="end" type="submit" (click)="addItem()" [disabled]="!addItemForm.valid" color="success">Add Item</ion-button>
   </ion-toolbar>
 </ion-footer>

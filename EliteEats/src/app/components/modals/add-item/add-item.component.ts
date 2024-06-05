@@ -9,7 +9,7 @@ import { FoodItem } from 'src/app/data/food-item';
   styleUrls: ['./add-item.component.scss'],
 })
 export class AddItemComponent  implements OnInit {
-  @Input({required: false}) modalTitle?: string;
+  @Input({required: false}) modalType?: string;
   addItemForm: FormGroup;
 
   // From Data/FoodItem

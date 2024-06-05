@@ -4,14 +4,12 @@ import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AddPantryItemModalComponent } from './components/add-pantry-item-modal/add-pantry-item-modal.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AddItemComponent } from './components/modals/add-item/add-item.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AddPantryItemModalComponent,
     AddItemComponent
   ],
   imports: [

@@ -45,7 +45,7 @@ export class ShoppingPage implements OnInit {
     const modal = await this.mc.create({
       component: AddItemComponent,
       componentProps: {
-        modalTitle: 'Add Item to Shopping List'
+        modalType: 'Shopping List'
       }
     });
     modal.present();
@@ -53,8 +53,7 @@ export class ShoppingPage implements OnInit {
     const{data, role} = await modal.onWillDismiss();
 
     if (role === 'confirm'){
-      // add foodItem from modal to organized pantryItems map
-      //
+      this.shoppingService.addItemToList(data);
     }
   }
 
