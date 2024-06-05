@@ -11,28 +11,86 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-toolbar>
+  <!-- Select Menu Options are only shown when at least 1 object is selected -->
+  <!-- 
+    As of right now, there is a bug where if you manually select ALL items, it won't switch
+    to deselect (same for manually deselecting & select all). But i dont think its needed 
+    to test that thoroughly so i'm lazy lol.
+  -->
+  <ion-toolbar *ngIf="showToolbar">
     <ion-buttons slot="start">
-      <ion-button>Select All</ion-button>
+      <!-- back/exit button -->
+      <ion-button (click)="showToolbar = false">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
     </ion-buttons>
-    <ion-buttons slot="start">
-      <ion-button>Delete</ion-button>
-    </ion-buttons>
-    <ion-buttons slot="end">
-      <ion-button>Add to Shopping List</ion-button>
-    </ion-buttons>
-  </ion-toolbar>
 
-  <ion-card>
+    <ion-buttons slot="end">
+      <!-- Add item button -->
+      <ion-button slot="secondary" (click)="addItem()">
+        <ion-icon name="add-outline"></ion-icon>
+      </ion-button>
+      <ion-button slot="end">
+        <ion-icon name="trash-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-button>
+      <ion-icon name="square-outline"></ion-icon>
+      Select All
+    </ion-button>
+
+    <ion-button>
+      <ion-icon name="checkbox-outline"></ion-icon>
+      Deselect All
+    </ion-button>
+  </ion-toolbar>
+  
+  <ion-card *ngIf="">
     <ion-card-header>
       <ion-card-title>Shopping List</ion-card-title>
     </ion-card-header>
-    <app-shopping-list></app-shopping-list>
+    <ion-list>
+      <ion-item>
+        List is Empty.
+      </ion-item>
+    </ion-list>
   </ion-card>
 
-  <ion-fab horizontal="center" vertical="bottom" slot="fixed">
-    <ion-fab-button (click)="addItem()">
-      <ion-icon name="add"></ion-icon>
+  <!-- Expandable button when not in editing/shoping mode -->
+  <ion-fab *ngIf="!showToolbar" slot="fixed" horizontal="end" vertical="bottom">
+    <ion-fab-button>
+      <ion-icon name="chevron-up"></ion-icon>
+    </ion-fab-button>
+    
+    <ion-fab-list side="top">
+      <ion-fab-button>
+        <ion-icon name="cart-outline"></ion-icon>
+      </ion-fab-button>
+
+      <ion-fab-button (click)="showToolbar = true">
+        <ion-icon name="pencil-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+
+  <!-- button in editing/shopping mode -->
+  <ion-fab *ngIf="showToolbar" slot="fixed" horizontal="end" vertical="bottom" (click)="showToolbar = false">
+    <ion-fab-button>
+      Done
     </ion-fab-button>
   </ion-fab>
+
+
+  <!--
+    MAIN CONTENT
+    LIST OF ITEMS
+  -->
+  <ion-item-group>
+    <ion-item-divider>
+      <ion-label>L</ion-label>
+    </ion-item-divider>
+  </ion-item-group>
+    
 </ion-content>
+  

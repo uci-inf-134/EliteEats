@@ -11,10 +11,11 @@ import { ShoppingService } from 'src/app/services/shopping.service';
   styleUrls: ['./shopping.page.scss'],
 })
 export class ShoppingPage implements OnInit {
+  public showToolbar: boolean = false;
   private modalOpened: boolean = false; // used for clearing queries
 
   constructor(
-    private shoppingService: ShoppingService, 
+    public shoppingService: ShoppingService, 
     private mc: ModalController,
     private router: Router,
     private route: ActivatedRoute,
@@ -53,12 +54,12 @@ export class ShoppingPage implements OnInit {
     const{data, role} = await modal.onWillDismiss();
 
     if (role === 'confirm'){
-      this.shoppingService.addItem(data);
+      this.shoppingService.addItem(data, data.category);
     }
   }
 
   // Method to get Shopping List
-  public getShoppingList(): Array<FoodItem> {
+  public getShoppingList(): Map<string, FoodItem[]> {
     return this.shoppingService.getShoppingList();
   }
 
