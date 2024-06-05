@@ -35,4 +35,12 @@ export class PantryService {
   clearPantry() {
     this.pantryItems.clear();
   }
+
+  getPantrySize(): number {
+    let totalSize = 0;
+    for (let items of this.pantryItems.values()) {
+      totalSize += items.length;
+    }
+    return totalSize;
+  }
 }

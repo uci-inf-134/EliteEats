@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
+import { PantryService } from 'src/app/services/pantry.service';
 
 @Component({
   selector: 'app-home',
@@ -8,8 +9,13 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
+  showPantryData: boolean = false;
 
-  constructor(private r:Router, private mc:ModalController) { }
+  constructor(
+    private r:Router, 
+    private mc:ModalController,
+    public ps:PantryService
+  ) { }
 
   ngOnInit() {
   }
@@ -24,5 +30,9 @@ export class HomePage implements OnInit {
 
   navigateToShoppingAdd(){
     this.r.navigate(['/tabs/shopping'], { queryParams: { addItem: 'true' }});
+  }
+
+  public getPantryList() { 
+    return this.ps.getPantryList; 
   }
 }

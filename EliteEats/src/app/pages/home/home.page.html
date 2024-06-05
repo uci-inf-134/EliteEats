@@ -35,7 +35,17 @@
       </ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <app-pantry-list></app-pantry-list>
+      <p *ngIf="ps.getPantrySize() == 0">Pantry List is Empty</p>
+      <div *ngIf="ps.getPantrySize() !== 0">
+        The pantry list currently contains {{ps.getPantrySize()}} items across {{ps.getPantryList().size}} categories.
+        <button *ngIf="!showPantryData" (click)="showPantryData = true">Show more</button>
+        <button *ngIf="showPantryData" (click)="showPantryData = false">Hide</button>
+        <div *ngIf="showPantryData">
+          <p *ngFor="let entry of ps.getPantryList() | keyvalue">
+            {{ entry.key }} : {{entry.value.length}} item(s)
+          </p>
+        </div>
+      </div>
     </ion-card-content>
   </ion-card>
 

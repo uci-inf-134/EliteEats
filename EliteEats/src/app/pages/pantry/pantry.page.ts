@@ -150,6 +150,7 @@ export class PantryPage implements OnInit {
       // remove item from pantry list and selected list
       this.pantryItems.get(category)!.splice(index, 1);
       this.itemsSelected.splice(this.itemsSelected.indexOf(item), 1);
+      this.ps.removePantryItem(category, item);
       this.totalEntries--;
   
       // if deleting item removed last element, change occupiedStatus to false
