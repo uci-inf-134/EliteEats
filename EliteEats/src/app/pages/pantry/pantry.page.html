@@ -12,24 +12,16 @@
       <!-- *ngIf="toolbarState == 'pantry'" -->
       <ion-title size="large">Pantry</ion-title>
     </ion-toolbar>
-
-    <ion-toolbar>
-      <!-- *ngIf="toolbarState == 'select'"
-      <ion-grid>
-        <ion-row>
-          <ion-button fill="clear" (click)="selectAll(false); setToolbar('pantry')"><ion-icon name="arrow-back-outline"></ion-icon></ion-button>
-        </ion-row>
-        <ion-row>-->
-          <ion-buttons>
-            <ion-button *ngIf="selectState == 'selectAll'" (click)="selectAll(true)">Select All</ion-button>
-            <ion-button *ngIf="selectState == 'deselectAll'" (click)="selectAll(false)">Deselect All</ion-button>
-            <ion-button (click)="deleteSelected()" color="danger">Delete</ion-button>
-            <ion-button color="success">Add to Shopping List</ion-button>
-          </ion-buttons>
-        <!--</ion-row>
-      </ion-grid>-->
-    </ion-toolbar>
   </ion-header>
+
+  <ion-toolbar>
+    <ion-buttons>
+      <ion-button *ngIf="selectState == 'selectAll'" (click)="selectAll(true)">Select All</ion-button>
+      <ion-button *ngIf="selectState == 'deselectAll'" (click)="selectAll(false)">Deselect All</ion-button>
+      <ion-button (click)="deleteSelected()" color="danger">Delete</ion-button>
+      <ion-button color="success">Add to Shopping List</ion-button>
+    </ion-buttons>
+</ion-toolbar>
 
   <!-- Select Menu Options are only shown when at least 1 object is selected -->
   <!-- 
