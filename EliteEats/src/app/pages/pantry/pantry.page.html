@@ -1,8 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>Pantry</ion-title>
-    <ion-button (click)="test()">Test get list</ion-button>
-    <ion-button (click)="testAdd()">Test add</ion-button>
   </ion-toolbar>
 </ion-header>
 
@@ -19,7 +17,7 @@
       <ion-button *ngIf="selectState == 'selectAll'" (click)="selectAll(true)">Select All</ion-button>
       <ion-button *ngIf="selectState == 'deselectAll'" (click)="selectAll(false)">Deselect All</ion-button>
       <ion-button (click)="deleteSelected()" color="danger">Delete</ion-button>
-      <ion-button color="success">Add to Shopping List</ion-button>
+      <ion-button (click)="addSelectedtoShopping()" color="success">Add to Shopping List</ion-button>
     </ion-buttons>
 </ion-toolbar>
 
