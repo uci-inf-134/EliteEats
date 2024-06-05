@@ -21,4 +21,8 @@ export class HomePage implements OnInit {
   navigateToPantryAdd(){
     this.r.navigate(['/tabs/pantry'], { queryParams: { addItem: 'true' }});
   }
+
+  navigateToShoppingAdd(){
+    this.r.navigate(['/tabs/shopping'], { queryParams: { addItem: 'true' }});
+  }
 }

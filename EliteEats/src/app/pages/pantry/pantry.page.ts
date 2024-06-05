@@ -6,6 +6,7 @@ import { FoodItem } from 'src/app/data/food-item';
 import { AddPantryItemModalComponent } from 'src/app/components/add-pantry-item-modal/add-pantry-item-modal.component';
 import { PantryService } from 'src/app/services/pantry.service';
 import { ShoppingService } from 'src/app/services/shopping.service';
+import { AddItemComponent } from 'src/app/components/modals/add-item/add-item.component';
 
 
 @Component({
@@ -33,7 +34,6 @@ export class PantryPage implements OnInit {
     private mc:ModalController, 
     private shoppingService: ShoppingService, 
     private ps: PantryService,
-    private gCtrl: GestureController,
   ) {}
 
   ngOnInit() {
@@ -41,7 +41,7 @@ export class PantryPage implements OnInit {
     this.route.queryParams.subscribe(async params => {
       if (params['addItem'] === 'true') {
         this.modalOpened = true;
-        await this.addPantryItem();
+        await this.addItem();
         this.clearQueryParams();
       }
     });
@@ -77,9 +77,12 @@ export class PantryPage implements OnInit {
 
   }
 
-  async addPantryItem(){
+  async addItem(){
     const modal = await this.mc.create({
-      component: AddPantryItemModalComponent
+      component: AddItemComponent,
+      componentProps: {
+        modalTitle: 'Add Item to Pantry'
+      }
     });
     modal.present();
 

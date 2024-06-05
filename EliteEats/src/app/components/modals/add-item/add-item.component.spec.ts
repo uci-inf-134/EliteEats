@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { DragAndDropComponent } from './drag-and-drop.component';
+import { AddItemComponent } from './add-item.component';
 
-describe('DragAndDropComponent', () => {
-  let component: DragAndDropComponent;
-  let fixture: ComponentFixture<DragAndDropComponent>;
+describe('AddItemComponent', () => {
+  let component: AddItemComponent;
+  let fixture: ComponentFixture<AddItemComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ DragAndDropComponent ],
+      declarations: [ AddItemComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(DragAndDropComponent);
+    fixture = TestBed.createComponent(AddItemComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

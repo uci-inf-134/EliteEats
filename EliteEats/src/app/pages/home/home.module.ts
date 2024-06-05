@@ -9,7 +9,6 @@ import { HomePageRoutingModule } from './home-routing.module';
 import { HomePage } from './home.page';
 import { ShoppingListComponent } from 'src/app/components/shopping-list/shopping-list.component';
 import { PantryListComponent } from 'src/app/components/pantry-list/pantry-list.component';
-import { DragAndDropComponent } from 'src/app/components/drag-and-drop/drag-and-drop.component';
 
 @NgModule({
   imports: [
@@ -19,7 +18,6 @@ import { DragAndDropComponent } from 'src/app/components/drag-and-drop/drag-and-
     HomePageRoutingModule,
     ShoppingListComponent,
     PantryListComponent,
-    DragAndDropComponent
   ],
   declarations: [HomePage]
 })
