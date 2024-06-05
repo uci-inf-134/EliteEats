@@ -20,7 +20,7 @@ export class PantryPage implements OnInit {
   public pantryItems: Map<string, FoodItem[]> = new Map();
   
   // conditionals for UI components
-  public itemsSelected: number = 0;
+  public itemsSelected: FoodItem[] = [];
   public totalEntries: number = 0;
   public selectState: string = 'selectAll';
   public pantryIsOccupied: boolean = false;
@@ -122,64 +122,66 @@ export class PantryPage implements OnInit {
     return this.pantryItems.get(category) || [];
   }
 
-  public updateSelection(item: FoodItem){
-    // NgModel in HTML updates checked <--> unchecked states
-    // if item is selected, add to counter, else deduct
-    item.selected ? this.itemsSelected++ : this.itemsSelected--;
-    console.log(this.itemsSelected);
-
-    // once the first item is selected, the toolbar will be set to select until the user presses back
-    // if (this.itemsSelected == 1){ this.setToolbar('select'); }
-  }
-
-  public selectAll(state: boolean): void {
-    this.pantryItems.forEach((itemsArray: FoodItem[]) => {
-      FoodItem.selectedAll(itemsArray, state);
-    })
-
-    // update count of selected entries
-    state ? this.itemsSelected = this.totalEntries : this.itemsSelected = 0;
-    this.itemsSelected == this.totalEntries ? this.setSelectState('deselectAll') : this.setSelectState('selectAll');
-  }
-
-  public deleteItem(category: string, index: any): void{
-    this.pantryItems.get(category)!.splice(index, 1);
-    this.totalEntries--;
-
-    // if deleting item removed last element, change occupiedStatus to false
-    if (this.totalEntries == 0){ 
-      this.pantryIsOccupied = false; 
+    // add or removes item from itemsSelected array based on checked state
+    public updateSelection(item: FoodItem){
+      item.selected ? this.itemsSelected.push(item) : this.itemsSelected.splice(this.itemsSelected.indexOf(item), 1);
     }
-  }
-
-  public deleteSelected(){
-    this.pantryItems.forEach((itemsArray: FoodItem[], category: string) => {
-      itemsArray.forEach((item, index) => {
-        for (let i = itemsArray.length - 1; i >= 0; i--) {
-          if (itemsArray[i].selected) {
-            this.deleteItem(category, i);
+  
+    // UI component: used to understand if "selectAll" or "deselectAll" button should be shown
+    public setSelectState(state: 'selectAll' | 'deselectAll'){
+      this.selectState = state;
+    }
+  
+    // select all items, update checked state, add to selectedItems array, and change toolbar select state if needed
+    public selectAll(state: boolean): void {
+      this.pantryItems.forEach((itemsArray: FoodItem[]) => {
+        FoodItem.selectedAll(itemsArray, state);
+        itemsArray.forEach(item => this.updateSelection(item));
+      })
+  
+      // update count of selected entries
+      this.itemsSelected.length == this.totalEntries ? this.setSelectState('deselectAll') : this.setSelectState('selectAll');
+    }
+  
+    // single delete
+    public deleteItem(category: string, index: any): void{
+      this.pantryItems.get(category)!.splice(index, 1);
+      this.totalEntries--;
+  
+      // if deleting item removed last element, change occupiedStatus to false
+      if (this.totalEntries == 0){ 
+        this.pantryIsOccupied = false; 
+      }
+    }
+  
+    // batch delete
+    public deleteSelected(){
+      this.pantryItems.forEach((itemsArray: FoodItem[], category: string) => {
+        itemsArray.forEach((item, index) => {
+          for (let i = itemsArray.length - 1; i >= 0; i--) {
+            if (itemsArray[i].selected) {
+              this.deleteItem(category, i);
+            }
           }
-        }
-      });
-    })
-  }
-
-  public setSelectState(state: 'selectAll' | 'deselectAll'){
-    this.selectState = state;
-  }
-
-  // Experimental Shopping List Functions
-  public addToShoppingList(item: FoodItem) {
-    this.shoppingService.addItemToList(item);
-  }
-
-  public test() {
-    console.log(this.shoppingService.getShoppingList());
-  }
-
-  public testAdd() {
-    for (let [_, items] of this.pantryItems) {
-      items.forEach((item) => this.addToShoppingList(item));
+        });
+      })
     }
-  }
+  
+    // single add
+    public addToShoppingList(item: FoodItem ) {
+      if (!this.shoppingService.itemIsInList(item)) { 
+        this.shoppingService.addItemToList(item);
+      }
+    }
+  
+    // batch add
+    public addSelectedtoShopping() {
+      this.pantryItems.forEach((itemsArray: FoodItem[]) => {
+        itemsArray.forEach((item) => {
+          if (item.selected) {
+            this.addToShoppingList(item);
+          }
+        });
+      })
+    }
 }

@@ -21,4 +21,7 @@ export class ShoppingService implements OnInit {
   public getShoppingList(): Array<FoodItem> {
     return this.shoppingList;
   }
+
+  public itemIsInList(item: FoodItem): boolean {
+  }
 }
