@@ -3,6 +3,7 @@ import { FoodItem } from 'src/app/data/food-item';
 import { ShoppingService } from 'src/app/services/shopping.service';
 import { ModalController } from '@ionic/angular';
 import { AddItemComponent } from 'src/app/components/modals/add-item/add-item.component';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-shopping',
@@ -10,10 +11,32 @@ import { AddItemComponent } from 'src/app/components/modals/add-item/add-item.co
   styleUrls: ['./shopping.page.scss'],
 })
 export class ShoppingPage implements OnInit {
+  private modalOpened: boolean = false;
 
-  constructor(private shoppingService: ShoppingService, private mc: ModalController) { }
+  constructor(
+    private shoppingService: ShoppingService, 
+    private mc: ModalController,
+    private route: ActivatedRoute,
+    private router: Router
+  ) { }
 
   ngOnInit() {
+    // If navigated from home page, opens Add Item Modal
+    this.route.queryParams.subscribe(async params => {
+      if (params['addItem'] === 'true') {
+        this.modalOpened = true;
+        await this.addShoppingItem();
+        this.clearQueryParams();
+      }
+    });
+  }
+
+  clearQueryParams() {
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { addItem: null },
+      queryParamsHandling: 'merge'
+    });
   }
 
   // Method to get Shopping List
