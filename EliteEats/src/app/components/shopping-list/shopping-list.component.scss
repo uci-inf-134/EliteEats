@@ -16,6 +16,6 @@ div[scrolly=true] {
     overflow-y: auto;
 }
 
-div {
-    max-height: 200px;
+#shopping-list {
+    max-height: inherit;
 }
