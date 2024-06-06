@@ -12,16 +12,38 @@
   </ion-header>
 
   <ion-card>
-    <ion-card-title>
-      <ion-icon name="notifications-outline" aria-hidden="true"></ion-icon>
-      Expiring Soon
-    </ion-card-title>
+    <ion-card-header>
+      <ion-card-title>
+        <ion-icon name="notifications-outline" aria-hidden="true"></ion-icon>
+        Expiring Soon
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ng-container *ngFor="let item of itemsTracked">
+          <ion-item *ngIf="item.daysUntilExpire < 7">
+            <div slot="start">{{item.name}}</div>
+            <div slot="end">Exp: {{item.daysUntilExpire}} days</div>
+          </ion-item>
+        </ng-container>
+      </ion-list>
+    </ion-card-content>
   </ion-card>
 
   <ion-card>
-    <ion-card-title>
-      <ion-icon name="notifications-outline" aria-hidden="true"></ion-icon>
-      Tracking
-    </ion-card-title>
+    <ion-card-header>
+      <ion-card-title>
+        <ion-icon name="notifications-outline" aria-hidden="true"></ion-icon>
+        Tracking
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list *ngFor="let item of itemsTracked">
+        <ion-item>
+          <div slot="start">{{item.name}}</div>
+          <div slot="end">Exp: {{item.daysUntilExpire}} days</div>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
   </ion-card>
 </ion-content>

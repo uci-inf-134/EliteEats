@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ExpirationService } from 'src/app/services/expiration.service';
+import { FoodItem } from 'src/app/data/food-item';
 
 @Component({
   selector: 'app-expiration',
@@ -6,10 +8,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./expiration.page.scss'],
 })
 export class ExpirationPage implements OnInit {
+  public itemsTracked: FoodItem[] = [];
 
-  constructor() { }
+  constructor(private es: ExpirationService) { }
 
   ngOnInit() {
+    this.itemsTracked = this.es.getItemsTracked();
   }
 
 }

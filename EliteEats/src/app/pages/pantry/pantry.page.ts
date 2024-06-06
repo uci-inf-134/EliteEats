@@ -7,6 +7,7 @@ import { FoodItem } from 'src/app/data/food-item';
 import { PantryService } from 'src/app/services/pantry.service';
 import { ShoppingService } from 'src/app/services/shopping.service';
 import { AddItemComponent } from 'src/app/components/modals/add-item/add-item.component';
+import { ExpirationService } from 'src/app/services/expiration.service';
 
 
 @Component({
@@ -33,7 +34,8 @@ export class PantryPage implements OnInit {
     private router:Router, 
     private mc:ModalController, 
     private shoppingService: ShoppingService, 
-    private ps: PantryService
+    private ps: PantryService,
+    private es: ExpirationService
   ) {}
 
   ngOnInit() {
@@ -171,7 +173,7 @@ export class PantryPage implements OnInit {
   }
 
   // single add
-  public addToShoppingList(item: FoodItem ) {
+  public addToShoppingList(item: FoodItem) {
     if (!this.shoppingService.itemIsInList(item)) { 
       this.shoppingService.addItemToList(item);
     }
@@ -186,5 +188,19 @@ export class PantryPage implements OnInit {
         }
       });
     })
+  }
+
+  public addExpirationTracking(items: FoodItem | FoodItem[]): void {
+    // if its an array of FoodItems, iterate and add
+    if (Array.isArray(items)){
+      items.forEach(item => {
+        if (!this.es.isItemTracked(item)) {
+          this.es.trackItem(item)
+        }
+      });
+    }
+    else if (!this.es.isItemTracked(items)){
+      this.es.trackItem(items);
+    }
   }
 }
