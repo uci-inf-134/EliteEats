@@ -13,19 +13,30 @@
 
   <ion-toolbar>
     <ion-buttons>
-      <ion-button>Select All</ion-button>
-      <ion-button>Delete</ion-button>
-      <ion-button>Add Item</ion-button>
+      <ion-button (click)="selectAll()">Select All</ion-button>
+      <ion-button (click)="removeSelected()">Delete</ion-button>
+      <!-- <ion-button>Add Item</ion-button> -->
       <ion-button>Renew</ion-button>
     </ion-buttons>
   </ion-toolbar>
 
   <ion-card>
-    <ion-card-header>
-      <ion-card-title>Shopping List</ion-card-title>
-    </ion-card-header>
-    <app-shopping-list></app-shopping-list>
+    <ion-card-content>
+      <!-- Loaded if Occupied Shopping List -->
+      <ion-list *ngIf="shoppingList.length > 0">
+        <ion-item *ngFor="let item of shoppingList; index as i">
+          <ion-checkbox slot="start" [(ngModel)]="selectedItems[i]"></ion-checkbox>
+          <ion-label>{{item.name}}</ion-label>
+        </ion-item>
+      </ion-list>
+
+      <!-- Loaded if Empty Shopping List -->
+      <div *ngIf="shoppingList.length == 0">
+        <p>List is Empty.</p>
+      </div>
+    </ion-card-content>
   </ion-card>
+
 
   <ion-fab horizontal="center" vertical="bottom" slot="fixed">
     <ion-fab-button id="pantryAddModal" (click)="addShoppingItem()">

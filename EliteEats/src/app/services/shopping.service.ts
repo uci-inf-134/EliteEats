@@ -1,5 +1,6 @@
 import { Injectable, OnInit } from '@angular/core';
 import { FoodItem } from '../data/food-item';
+import { PantryService } from './pantry.service';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +8,7 @@ import { FoodItem } from '../data/food-item';
 export class ShoppingService implements OnInit {
   private shoppingList: Array<FoodItem> = [];
 
-  constructor() { }
+  constructor(private pantryService: PantryService) { }
 
   ngOnInit(): void {
   }
@@ -25,5 +26,15 @@ export class ShoppingService implements OnInit {
   // Returns T/F if item is in shopping list
   public itemIsInList(item: FoodItem): boolean {
     return this.shoppingList.includes(item);
+  }
+
+  // Removes given item from shopping list
+  public removeItem(item: FoodItem) {
+    this.shoppingList = this.shoppingList.filter(i => i !== item);
+  }
+
+  // Renews given item
+  public renewItem(item: FoodItem) {
+    this.pantryService.renewItem(item);
   }
 }

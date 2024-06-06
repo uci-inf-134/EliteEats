@@ -3,8 +3,8 @@
   <ion-card>
     <ion-card-content>
       <ion-list>
-        <ion-item *ngFor="let item of shoppingList">
-          <ion-checkbox slot="start"></ion-checkbox>
+        <ion-item *ngFor="let item of shoppingList; index as i">
+          <ion-checkbox slot="start" [(ngModel)]="selectedItems[i]" (ionChange)="updateSelection(i)"></ion-checkbox>
           <ion-label>{{item.name}}</ion-label>
         </ion-item>
         <!-- <ion-item>
@@ -12,6 +12,14 @@
             <ion-label>test</ion-label>
           </ion-item> -->
       </ion-list>
+
+      <!-- <ion-item *ngFor="let item of getItemsByCategory(category); index as i" class="noselect">
+        <ion-checkbox slot="start" [(ngModel)]="item.selected" (ionChange)="updateSelection(item)"></ion-checkbox>
+        <p style="font-size: medium;">{{ item.name }}</p>
+        <p slot="end" style="font-size: small;">Exp: ~{{item.daysUntilExpire}} day(s)</p>
+        <ion-icon *ngIf="item.daysUntilExpire > 0" slot="end" name="nutrition" [style.color]="item.expColor"></ion-icon>
+        <ion-icon *ngIf="item.daysUntilExpire <= 0" name="alert-outline" slot="end" [style.color]="'red'"></ion-icon>
+      </ion-item> -->
 
     </ion-card-content>
   </ion-card>
