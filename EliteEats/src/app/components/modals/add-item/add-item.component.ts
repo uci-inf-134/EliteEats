@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { FoodItem } from 'src/app/data/food-item';
 
 @Component({
-  selector: 'app-add-pantry-item-modal',
-  templateUrl: './add-pantry-item-modal.component.html',
-  styleUrls: ['./add-pantry-item-modal.component.scss'],
+  selector: 'app-add-item',
+  templateUrl: './add-item.component.html',
+  styleUrls: ['./add-item.component.scss'],
 })
-export class AddPantryItemModalComponent  implements OnInit {
+export class AddItemComponent  implements OnInit {
+  @Input({required: true}) type!: string;
   addItemForm: FormGroup;
 
   // From Data/FoodItem

@@ -4,9 +4,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { GestureController, GestureDetail, ModalController } from '@ionic/angular';
 
 import { FoodItem } from 'src/app/data/food-item';
-import { AddPantryItemModalComponent } from 'src/app/components/modals/add-pantry-item-modal/add-pantry-item-modal.component';
 import { PantryService } from 'src/app/services/pantry.service';
 import { ShoppingService } from 'src/app/services/shopping.service';
+import { AddItemComponent } from 'src/app/components/modals/add-item/add-item.component';
 
 
 @Component({
@@ -132,7 +132,10 @@ export class PantryPage implements OnInit, AfterViewInit {
   // show modal
   async addPantryItem(){
     const modal = await this.mc.create({
-      component: AddPantryItemModalComponent
+      component: AddItemComponent,
+      componentProps: {
+        type: "Pantry"
+      }
     });
     modal.present();
 
