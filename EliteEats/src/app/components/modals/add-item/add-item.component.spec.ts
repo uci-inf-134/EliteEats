@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { AddPantryItemModalComponent } from './add-pantry-item-modal.component';
+import { AddItemComponent } from './add-item.component';
 
-describe('AddPantryItemModalComponent', () => {
-  let component: AddPantryItemModalComponent;
-  let fixture: ComponentFixture<AddPantryItemModalComponent>;
+describe('AddItemComponent', () => {
+  let component: AddItemComponent;
+  let fixture: ComponentFixture<AddItemComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddPantryItemModalComponent ],
+      declarations: [ AddItemComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(AddPantryItemModalComponent);
+    fixture = TestBed.createComponent(AddItemComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

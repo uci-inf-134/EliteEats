@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FoodItem } from 'src/app/data/food-item';
 import { ShoppingService } from 'src/app/services/shopping.service';
-import { AddPantryItemModalComponent } from 'src/app/components/modals/add-pantry-item-modal/add-pantry-item-modal.component';
 import { ModalController } from '@ionic/angular';
+import { AddItemComponent } from 'src/app/components/modals/add-item/add-item.component';
 
 @Component({
   selector: 'app-shopping',
@@ -24,7 +24,10 @@ export class ShoppingPage implements OnInit {
   // show modal
   async addShoppingItem(){
     const modal = await this.mc.create({
-      component: AddPantryItemModalComponent
+      component: AddItemComponent,
+      componentProps: {
+        type : "Shopping list"
+      }
     });
     modal.present();
 
