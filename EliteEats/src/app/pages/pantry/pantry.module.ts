@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { PantryPageRoutingModule } from './pantry-routing.module';
 
 import { PantryPage } from './pantry.page';
+import { ExpirationNotificationComponent } from 'src/app/components/modals/expiration-notification/expiration-notification.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    PantryPageRoutingModule
+    PantryPageRoutingModule,
+    ExpirationNotificationComponent
   ],
   declarations: [PantryPage]
 })

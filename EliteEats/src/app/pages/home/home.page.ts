@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
+import { ExpirationService } from 'src/app/services/expiration.service';
+import { FoodItem } from 'src/app/data/food-item';
 
 @Component({
   selector: 'app-home',
@@ -9,7 +11,7 @@ import { ModalController } from '@ionic/angular';
 })
 export class HomePage implements OnInit {
 
-  constructor(private r:Router, private mc:ModalController) { }
+  constructor(private r:Router, private mc:ModalController, private es:ExpirationService) { }
 
   ngOnInit() {
   }
@@ -24,5 +26,9 @@ export class HomePage implements OnInit {
 
   navigateToShoppingAdd(){
     this.r.navigate(['/tabs/shopping'], { queryParams: { addItem: 'true' }});
+  }
+
+  getExpiringItems(): FoodItem[] {
+    return this.es.getItemsTracked().filter(item => item.daysUntilExpire < 7);
   }
 }

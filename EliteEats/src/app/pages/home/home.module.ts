@@ -9,6 +9,7 @@ import { HomePageRoutingModule } from './home-routing.module';
 import { HomePage } from './home.page';
 import { ShoppingListComponent } from 'src/app/components/shopping-list/shopping-list.component';
 import { PantryListComponent } from 'src/app/components/pantry-list/pantry-list.component';
+import { ExpirationListComponent } from 'src/app/components/expiration-list/expiration-list.component';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { PantryListComponent } from 'src/app/components/pantry-list/pantry-list.
     IonicModule,
     HomePageRoutingModule,
     ShoppingListComponent,
-    PantryListComponent
+    PantryListComponent,
+    ExpirationListComponent
   ],
   declarations: [HomePage]
 })

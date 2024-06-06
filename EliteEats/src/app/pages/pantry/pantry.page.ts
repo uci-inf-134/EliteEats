@@ -8,6 +8,7 @@ import { PantryService } from 'src/app/services/pantry.service';
 import { ShoppingService } from 'src/app/services/shopping.service';
 import { AddItemComponent } from 'src/app/components/modals/add-item/add-item.component';
 import { ExpirationService } from 'src/app/services/expiration.service';
+import { ExpirationNotificationComponent } from 'src/app/components/modals/expiration-notification/expiration-notification.component';
 
 
 @Component({
@@ -19,6 +20,7 @@ import { ExpirationService } from 'src/app/services/expiration.service';
 export class PantryPage implements OnInit, AfterViewInit {
   public pantryItems: Map<string, FoodItem[]> = new Map();
   public itemsSelected: FoodItem[] = [];
+  public expiringItems: FoodItem[] = [];
   
   // conditionals for UI components
   public totalEntries: number = 0;
@@ -84,11 +86,10 @@ export class PantryPage implements OnInit, AfterViewInit {
       this.addToCategory(fi);
     });
     /** end of static data. DELETE LATER DELETE LATER */
-
-
   }
 
   ngAfterViewInit() {
+    this.checkForExpiringItems();
     // MATT TESTING FOR GESTURES
     const gesture = this.gestureCtrl.create({
       el: this.pantryList.nativeElement.closest('ion-content'),
@@ -154,6 +155,37 @@ export class PantryPage implements OnInit, AfterViewInit {
    this.updatePantryState();
   }
 
+  checkForExpiringItems() {
+    this.expiringItems = [];
+    this.pantryItems.forEach((items) => {
+      items.forEach(item => {
+        if (item.daysUntilExpire <= 0) {
+          this.expiringItems.push(item);
+        }
+      });
+    });
+
+    if (this.expiringItems.length > 0) {
+      this.showExpiringItemsModal();
+    }
+  }
+
+  async showExpiringItemsModal() {
+    const modal = await this.mc.create({
+      component: ExpirationNotificationComponent,
+      componentProps: {
+        expiringItems: this.getExpiringItems()
+      }
+    });
+    modal.present();
+
+    const{data, role} = await modal.onWillDismiss();
+
+    if (role === 'confirm'){
+      this.expiringItems.forEach(item => this.deleteItem(item));
+    }
+  }
+
   private updatePantryState() {
     this.pantryItems = this.ps.getPantryList();
     this.totalEntries = Array.from(this.pantryItems.values()).reduce((sum, items) => sum + items.length, 0);
@@ -190,9 +222,11 @@ export class PantryPage implements OnInit, AfterViewInit {
   }
 
   // single delete
-  public deleteItem(category: string, index: any): void{
-    this.pantryItems.get(category)!.splice(index, 1);
+  public deleteItem(item: FoodItem): void{
+    const categoryArr = this.pantryItems.get(item.category);
+    categoryArr!.splice(categoryArr!.indexOf(item), 1)
     this.totalEntries--;
+    this.removeExpirtionTracking(item);
 
     // if deleting item removed last element, change occupiedStatus to false
     if (this.totalEntries == 0){ 
@@ -203,12 +237,10 @@ export class PantryPage implements OnInit, AfterViewInit {
   // batch delete
   public deleteSelected(){
     this.pantryItems.forEach((itemsArray: FoodItem[], category: string) => {
-      itemsArray.forEach((item, index) => {
-        for (let i = itemsArray.length - 1; i >= 0; i--) {
-          if (itemsArray[i].selected) {
-            this.deleteItem(category, i);
+      itemsArray.forEach((item) => {
+          if (item.selected) {
+            this.deleteItem(item);
           }
-        }
       });
     })
   }
@@ -243,5 +275,20 @@ export class PantryPage implements OnInit, AfterViewInit {
     else if (!this.es.isItemTracked(items)){
       this.es.trackItem(items);
     }
+  }
+
+  public removeExpirtionTracking(items: FoodItem | FoodItem[]): void {
+    if (Array.isArray(items)){
+      items.forEach(item => {
+        this.es.removeItemTracking(item);
+      })
+    }
+    else {
+      this.es.removeItemTracking(items);
+    }
+  }
+
+  public getExpiringItems(): FoodItem[] {
+    return this.expiringItems;
   }
 }
