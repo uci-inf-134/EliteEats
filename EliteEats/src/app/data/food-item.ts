@@ -79,4 +79,16 @@ export class FoodItem {
     public renewExpiration() {
         this.daysUntilExpire = this.expirationDuration();
     }
+
+    public expirationToString() {
+        if (this.daysUntilExpire == 0) {
+            return "Exp: today";
+          }
+          else if (this.daysUntilExpire < 0) {
+            return "EXPIRED";
+          }
+          else {
+            return "Exp: " + this.daysUntilExpire + " days";
+          }
+    }
 }
