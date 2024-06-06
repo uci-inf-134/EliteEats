@@ -1,20 +1,25 @@
-<div scrollY="true">
-<ion-list *ngIf="!isEmpty()">
-  <ion-item *ngFor="let item of shoppingList">
-    <ion-checkbox slot="start"></ion-checkbox>
-    <ion-label>{{item.name}}</ion-label>
-  </ion-item>
-  <!-- <ion-item>
-      <ion-checkbox slot="start"></ion-checkbox>
-      <ion-label>test</ion-label>
-    </ion-item> -->
-</ion-list>
+<div scrollY="true" *ngIf="!isEmpty()" id="shopping-list">
+
+  <ion-card>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let item of shoppingList">
+          <ion-checkbox slot="start"></ion-checkbox>
+          <ion-label>{{item.name}}</ion-label>
+        </ion-item>
+        <!-- <ion-item>
+            <ion-checkbox slot="start"></ion-checkbox>
+            <ion-label>test</ion-label>
+          </ion-item> -->
+      </ion-list>
+
+    </ion-card-content>
+  </ion-card>
 </div>
 
-<ion-card *ngIf="isEmpty()">
-  <ion-list>
-    <ion-item>
-      List is Empty.
-    </ion-item>
-  </ion-list>
-</ion-card>
+
+
+
+<div *ngIf="isEmpty()">
+  <p>List is Empty.</p>
+</div>

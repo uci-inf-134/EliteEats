@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild, viewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { ModalController } from '@ionic/angular';
+import { GestureController, GestureDetail, ModalController } from '@ionic/angular';
 
 import { FoodItem } from 'src/app/data/food-item';
 import { PantryService } from 'src/app/services/pantry.service';
@@ -16,7 +16,7 @@ import { ExpirationService } from 'src/app/services/expiration.service';
   styleUrls: ['./pantry.page.scss'],
   template: '{{PantryService.pantryItems}}'
 })
-export class PantryPage implements OnInit {
+export class PantryPage implements OnInit, AfterViewInit {
   public pantryItems: Map<string, FoodItem[]> = new Map();
   public itemsSelected: FoodItem[] = [];
   
@@ -29,13 +29,20 @@ export class PantryPage implements OnInit {
   public readonly categories: string[] = FoodItem.categories; // used for UI dividers
   private modalOpened: boolean = false;
 
+  @ViewChild('pantryList', { read: ElementRef }) pantryList!: ElementRef;
+  // @ViewChild('coverblur', { read: ElementRef }) coverBlur!: ElementRef;
+  public blurBackground: boolean = false;
+
   constructor(
     private route: ActivatedRoute, 
     private router:Router, 
     private mc:ModalController, 
     private shoppingService: ShoppingService, 
     private ps: PantryService,
-    private es: ExpirationService
+    private es: ExpirationService,
+    private gestureCtrl: GestureController,
+    private el: ElementRef,
+    private cdRef: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -78,6 +85,40 @@ export class PantryPage implements OnInit {
     });
     /** end of static data. DELETE LATER DELETE LATER */
 
+
+  }
+
+  ngAfterViewInit() {
+    // MATT TESTING FOR GESTURES
+    const gesture = this.gestureCtrl.create({
+      el: this.pantryList.nativeElement.closest('ion-content'),
+      onStart: () => this.onStart(),
+      onMove: (detail) => this.onMove(detail),
+      onEnd: () => this.onEnd(),
+      gestureName: 'testing',
+      blurOnStart: true,
+    })
+
+    gesture.enable();
+  }
+
+  // GESTURE TESTING
+  private onStart() {
+    console.log('STARTED');
+    // this.coverBlur.nativeElement.visible = true;
+    if (this.itemsSelected.length > 0) { this.blurBackground = true; }
+    this.cdRef.detectChanges();
+  }
+
+  private onMove(detail: GestureDetail) {
+    console.log('MOVING');
+  }
+
+  private onEnd() {
+    console.log('ENDED')
+    // this.coverBlur.nativeElement.visible = false;
+    this.blurBackground = false;
+    this.cdRef.detectChanges();
   }
 
   // Clear the query parameters after opening the modal
