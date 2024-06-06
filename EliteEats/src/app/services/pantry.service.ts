@@ -37,4 +37,32 @@ export class PantryService {
   clearPantry() {
     this.pantryItems.clear();
   }
+
+  renewItem(item: FoodItem) {
+    if (this.pantryItems.has(item.category)) {
+      if (!this.pantryItems.get(item.category)!.find((pantryItem) => pantryItem.name == item.name)?.renewExpiration()) {
+        item.renewExpiration();
+        this.addPantryItem(item.category, item);
+      }
+
+      // for (let pantryItem of this.pantryItems.get(item.category)!) {
+      //   if (pantryItem.name == item.name) {
+      //     pantryItem.renewExpiration();
+      //   }
+      // }
+
+    }
+    else {
+      item.renewExpiration();
+      this.addPantryItem(item.category, item);
+    }
+
+    // for (let items of this.pantryItems.values()) {
+    //   items.forEach((pantryItem) => {
+    //     if (item === pantryItem) {
+    //       pantryItem.renewExpiration();
+    //     }
+    //   })
+    // }
+  }
 }
