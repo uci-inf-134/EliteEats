@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { FoodItem } from 'src/app/data/food-item';
+import { ShoppingService } from 'src/app/services/shopping.service';
 
 @Component({
   selector: 'app-add-item',
@@ -16,7 +17,7 @@ export class AddItemComponent  implements OnInit {
   public categories: string[] = FoodItem.categories;
   public expirationPeriods: string[] = FoodItem.expirationPeriods;
 
-  constructor(public fb: FormBuilder, private mc:ModalController) { 
+  constructor(public fb: FormBuilder, private mc:ModalController, private shoppingService: ShoppingService) { 
     this.addItemForm = fb.group({
       name: ['', Validators.required],
       category: ['', Validators.required],
@@ -68,6 +69,8 @@ export class AddItemComponent  implements OnInit {
     // create food item
     let foodItem = new FoodItem(name, category, expirationDate);
     
+    this.shoppingService.addItemToList(foodItem);
+
     // close modal
     return this.mc.dismiss(foodItem, 'confirm');
   }
