@@ -84,8 +84,9 @@
             <ion-checkbox slot="start" [(ngModel)]="item.selected" (ionChange)="updateSelection(item)"></ion-checkbox>
             <p style="font-size: medium;">{{ item.name }}</p>
             <p style="font-size: small;" slot="end">{{item.expirationToString()}}</p>
-            <ion-icon *ngIf="item.daysUntilExpire > 0" slot="end" name="nutrition" [style.color]="item.expColor"></ion-icon>
-            <ion-icon *ngIf="item.daysUntilExpire <= 0" name="alert-outline" slot="end" [style.color]="'red'"></ion-icon>
+            <!--<ion-icon *ngIf="item.daysUntilExpire > 0" slot="end" name="nutrition" [style.color]="item.expColor"></ion-icon>
+            <ion-icon *ngIf="item.daysUntilExpire <= 0" name="alert-outline" slot="end" [style.color]="'red'"></ion-icon>-->
+            <ion-button slot="end" [color]="item.expColor"></ion-button>
           </ion-item>
 
       </ion-item-group>
