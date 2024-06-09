@@ -14,7 +14,7 @@
   <ion-card>
     <ion-card-header>
       <ion-card-title>
-        <ion-icon name="notifications-outline" aria-hidden="true"></ion-icon>
+        <ion-icon name="notifications" aria-hidden="true"></ion-icon>
         Expiring Soon
       </ion-card-title>
     </ion-card-header>
@@ -24,6 +24,7 @@
           <ion-item *ngIf="item.daysUntilExpire < 7">
             <div slot="start">{{item.name}}</div>
             <div slot="end" style="font-size: smaller;">{{item.expirationToString()}}</div>
+            <ion-button slot="end" [color]="item.expColor"></ion-button>
           </ion-item>
         </ng-container>
       </ion-list>
@@ -33,7 +34,6 @@
   <ion-card>
     <ion-card-header>
       <ion-card-title>
-        <ion-icon name="notifications-outline" aria-hidden="true"></ion-icon>
         Tracking
       </ion-card-title>
     </ion-card-header>
@@ -42,6 +42,7 @@
         <ion-item>
           <div slot="start">{{item.name}}</div>
           <div slot="end" style="font-size: smaller;">{{item.expirationToString()}}</div>
+          <ion-button slot="end" [color]="item.expColor"></ion-button>
         </ion-item>
       </ion-list>
     </ion-card-content>
