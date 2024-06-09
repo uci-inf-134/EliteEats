@@ -1,3 +1,18 @@
+<div #coverblur id="coverblur" *ngIf="blurBackground">
+
+</div>
+
+<div id="blurOptions" *ngIf="blurBackground">
+  <ion-grid>
+    <ion-row class="ion-align-items-center">
+      <ion-col class="ion-text-center gx-0">
+        <ion-button size="large" (mouseup)="removeSelected()">Remove Items</ion-button>
+        <ion-button size="large" (mouseup)="renewSelected()">Renew Items</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>
+
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>Shopping List</ion-title>
@@ -21,7 +36,7 @@
   </ion-toolbar>
 
   <ion-card>
-    <ion-card-content>
+    <ion-card-content #shoppingListRef class="noselect">
       <!-- Loaded if Occupied Shopping List -->
       <ion-list *ngIf="shoppingList.length > 0">
         <ion-item *ngFor="let item of shoppingList; index as i">

@@ -1,7 +1,7 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FoodItem } from 'src/app/data/food-item';
 import { ShoppingService } from 'src/app/services/shopping.service';
-import { ModalController } from '@ionic/angular';
+import { GestureController, GestureDetail, ModalController } from '@ionic/angular';
 import { AddItemComponent } from 'src/app/components/modals/add-item/add-item.component';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -10,18 +10,23 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './shopping.page.html',
   styleUrls: ['./shopping.page.scss'],
 })
-export class ShoppingPage implements OnInit {
+export class ShoppingPage implements OnInit, AfterViewInit {
   public shoppingList!: FoodItem[];
   public selectedItems: boolean[] = [];
 
   private modalOpened: boolean = false;
+
+  // Variables for Dragging
+  @ViewChild('shoppingListRef', { read: ElementRef}) shoppingListRef!: ElementRef;
+  public blurBackground: boolean = false;
 
   constructor(
     private shoppingService: ShoppingService, 
     private mc: ModalController,
     private route: ActivatedRoute,
     private router: Router,
-    private cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
+    private gestureCtrl: GestureController
   ) { }
 
   ngOnInit() {
@@ -41,6 +46,37 @@ export class ShoppingPage implements OnInit {
         this.clearQueryParams();
       }
     });
+  }
+
+  ngAfterViewInit(): void {
+    // MATT TESTING FOR GESTURES
+    console.log(this.shoppingListRef);
+    const gesture = this.gestureCtrl.create({
+      el: this.shoppingListRef.nativeElement.closest('ion-content'),
+      onStart: () => this.onStart(),
+      onMove: (detail) => this.onMove(detail),
+      onEnd: () => this.onEnd(),
+      gestureName: 'dragging',
+      blurOnStart: true,
+    })
+
+    gesture.enable();
+  }
+
+  private onStart() {
+    console.log('STARTING');
+    if (this.selectedItems.filter(item => item).length > 0) { this.blurBackground = true; }
+    this.cdRef.detectChanges();
+  }
+
+  private onMove(detail: GestureDetail) {
+    console.log('MOVING');
+  }
+
+  private onEnd() {
+    console.log('ENDING');
+    this.blurBackground = false;
+    this.cdRef.detectChanges();
   }
 
   clearQueryParams() {
