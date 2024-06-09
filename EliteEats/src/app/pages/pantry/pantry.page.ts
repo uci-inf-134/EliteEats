@@ -235,8 +235,7 @@ export class PantryPage implements OnInit, AfterViewInit {
   // select all items, update checked state, add to selectedItems array, and change toolbar select state if needed
   public selectAll(state: boolean): void {
     this.pantryItems.forEach((itemsArray: FoodItem[], section: string) => {
-        FoodItem.selectedAll(itemsArray, state);
-        itemsArray.forEach(item => this.updateSelection(item));
+        this.selectCategory(state, section);
     })
 
     // update count of selected entries
