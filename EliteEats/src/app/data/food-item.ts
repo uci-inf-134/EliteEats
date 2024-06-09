@@ -11,7 +11,7 @@ export class FoodItem {
     daysUntilExpire: number;
     expColor: string | undefined;
 
-    public readonly expColorCodes: Map<string, range> = ExpirationCode.expColorCodes;
+    public readonly expColorCodes = ExpirationCode.expColorCodes;
 
     public static categories: string[] = [
         'Fruits',
@@ -56,19 +56,13 @@ export class FoodItem {
 
     public getColor(day: number): string | undefined {
         for (const [color, range] of ExpirationCode.expColorCodes.entries()) {
-            const [start, end] = range;
-            if (end === undefined) {
-                if (day >= start) {
-                    return color;
-                }
-            } else {
-                if (day >= start && day <= end) {
-                    return color;
-                }
-            }
+          const [start, end] = range;
+          if ((start === null || day >= start) && (end === null || day <= end)) {
+            return color;
+          }
         }
         return undefined; // Return undefined if no matching range is found
-    }
+      }
 
     private expirationDuration() {
         const dateDifference = this.expirationEnd.valueOf() - this.expirationStart.valueOf(); // calc in ms
