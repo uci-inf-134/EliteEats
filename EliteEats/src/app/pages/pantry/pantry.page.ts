@@ -21,6 +21,7 @@ export class PantryPage implements OnInit, AfterViewInit {
   public pantryItems: Map<string, FoodItem[]> = new Map();
   public itemsSelected: FoodItem[] = [];
   public expiringItems: FoodItem[] = [];
+  public categorySelectionStatus: {[key: string]: boolean} = {};
   
   // conditionals for UI components
   public totalEntries: number = 0;
@@ -86,6 +87,10 @@ export class PantryPage implements OnInit, AfterViewInit {
       this.addToCategory(fi);
     });
     /** end of static data. DELETE LATER DELETE LATER */
+
+    Object.keys(this.pantryItems).forEach(category => {
+      this.categorySelectionStatus[category] = false;
+    });
   }
 
   ngAfterViewInit() {
@@ -200,6 +205,10 @@ export class PantryPage implements OnInit, AfterViewInit {
     return this.pantryItems.get(category) || [];
   }
 
+  public categoryIsSelected(category: string): boolean {
+    return this.categorySelectionStatus[category] || false;
+  }
+
   // add or removes item from itemsSelected array based on checked state
   public updateSelection(item: FoodItem){
     item.selected ? this.itemsSelected.push(item) : this.itemsSelected.splice(this.itemsSelected.indexOf(item), 1);
@@ -210,11 +219,24 @@ export class PantryPage implements OnInit, AfterViewInit {
     this.selectState = state;
   }
 
+  public selectCategory(state: boolean, category: string): void {
+    this.pantryItems.forEach((itemsArray: FoodItem[], section: string) => {
+      if (section == category){
+        FoodItem.selectedAll(itemsArray, state);
+        itemsArray.forEach(item => this.updateSelection(item));
+        this.categorySelectionStatus[category] = state;
+      }
+  })
+
+  // update count of selected entries
+  this.itemsSelected.length == this.totalEntries ? this.setSelectState('deselectAll') : this.setSelectState('selectAll');
+  }
+
   // select all items, update checked state, add to selectedItems array, and change toolbar select state if needed
   public selectAll(state: boolean): void {
-    this.pantryItems.forEach((itemsArray: FoodItem[]) => {
-      FoodItem.selectedAll(itemsArray, state);
-      itemsArray.forEach(item => this.updateSelection(item));
+    this.pantryItems.forEach((itemsArray: FoodItem[], section: string) => {
+        FoodItem.selectedAll(itemsArray, state);
+        itemsArray.forEach(item => this.updateSelection(item));
     })
 
     // update count of selected entries

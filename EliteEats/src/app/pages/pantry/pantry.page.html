@@ -27,16 +27,17 @@
     </ion-toolbar>
   </ion-header>
 
-  <!--
   <ion-toolbar>
     <ion-buttons>
-      <ion-button *ngIf="selectState == 'selectAll'" (click)="selectAll(true)">Select All</ion-button>
-      <ion-button *ngIf="selectState == 'deselectAll'" (click)="selectAll(false)">Deselect All</ion-button>
-      <ion-button (click)="deleteSelected()" color="danger">Delete</ion-button>
-      <ion-button (click)="addSelectedtoShopping()" color="success">Add to Shopping List</ion-button>
+      <ion-button *ngIf="selectState == 'selectAll'" (click)="selectAll(true)">
+        <ion-icon name="square-outline"></ion-icon>
+        Select All</ion-button>
+      <ion-button *ngIf="selectState == 'deselectAll'" (click)="selectAll(false)">
+        <ion-icon name="checkbox-outline"></ion-icon>
+        Deselect All</ion-button>
       <ion-button (click)="addExpirationTracking(itemsSelected)">Track Expiration</ion-button>
     </ion-buttons>
-</ion-toolbar>-->
+</ion-toolbar>
 
   <!-- Select Menu Options are only shown when at least 1 object is selected -->
   <!-- 
@@ -62,15 +63,21 @@
   <div *ngIf="pantryIsOccupied">
     <ion-list *ngFor="let category of categories" #pantryList>
       <ion-item-group *ngIf="pantryHasCategory(category)">
+
+        <!--category dividers-->
         <ion-item-divider>
+          <ion-buttons>
+            <ion-button (click)="selectCategory(false, category)" *ngIf="categoryIsSelected(category)">
+              <!-- not selected -->
+              <ion-icon name="checkbox-outline"></ion-icon>
+            </ion-button>
+            <ion-button (click)="selectCategory(true, category)" *ngIf="!categoryIsSelected(category)">
+              <!-- selected -->
+              <ion-icon name="square-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
           <ion-label>{{category}}</ion-label>
         </ion-item-divider>
-
-        <!-- left-side sliders -->
-        <!-- <ion-item-sliding *ngFor="let item of getItemsByCategory(category); index as i">
-          <ion-item-options side="start">
-            <ion-item-option (click)="deleteItem(item)" color="danger">Delete</ion-item-option>
-          </ion-item-options> -->
 
           <!-- Name of item -->
           <ion-item *ngFor="let item of getItemsByCategory(category); index as i" class="noselect">
@@ -81,12 +88,6 @@
             <ion-icon *ngIf="item.daysUntilExpire <= 0" name="alert-outline" slot="end" [style.color]="'red'"></ion-icon>
           </ion-item>
 
-          <!-- right-side sliders -->
-          <!-- <ion-item-options side="end"> -->
-            <!--<ion-item-option>Option 2</ion-item-option>-->
-            <!-- <ion-item-option color="success" (click)="addToShoppingList(item)">+ Shopping List</ion-item-option>
-          </ion-item-options>
-        </ion-item-sliding> -->
       </ion-item-group>
     </ion-list>
   </div>
