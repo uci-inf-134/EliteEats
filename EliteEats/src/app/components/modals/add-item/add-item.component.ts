@@ -69,7 +69,7 @@ export class AddItemComponent  implements OnInit {
     // create food item
     let foodItem = new FoodItem(name, category, expirationDate);
     
-    this.shoppingService.addItemToList(foodItem);
+    // this.shoppingService.addItemToList(foodItem);
 
     // close modal
     return this.mc.dismiss(foodItem, 'confirm');

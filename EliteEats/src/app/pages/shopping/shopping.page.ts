@@ -106,6 +106,7 @@ export class ShoppingPage implements OnInit, AfterViewInit {
 
     if (role === 'confirm'){
       // add foodItem from modal to organized pantryItems map
+      this.shoppingService.addItemToList(data);
       
     }
   }

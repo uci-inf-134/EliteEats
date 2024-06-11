@@ -269,6 +269,7 @@ export class PantryPage implements OnInit, AfterViewInit {
   // single add
   public addToShoppingList(item: FoodItem) {
     if (!this.shoppingService.itemIsInList(item)) { 
+      console.log("TESTT")
       this.shoppingService.addItemToList(item);
     }
   }
@@ -278,6 +279,7 @@ export class PantryPage implements OnInit, AfterViewInit {
     this.pantryItems.forEach((itemsArray: FoodItem[]) => {
       itemsArray.forEach((item) => {
         if (item.selected) {
+          console.log('HELP ME');
           this.addToShoppingList(item);
         }
       });
