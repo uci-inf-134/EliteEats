@@ -82,10 +82,10 @@ export class PantryPage implements OnInit, AfterViewInit {
       { name: 'Olive Oil', category: 'Oils and Vinegars', expirationDate: new Date('2024-08-10') },
     ];
 
-    itemData.forEach(data => {
-      const fi = new FoodItem(data.name, data.category, data.expirationDate);
-      this.addToCategory(fi);
-    });
+    // itemData.forEach(data => {
+    //   const fi = new FoodItem(data.name, data.category, data.expirationDate);
+    //   this.addToCategory(fi);
+    // });
     /** end of static data. DELETE LATER DELETE LATER */
 
     Object.keys(this.pantryItems).forEach(category => {
@@ -97,7 +97,7 @@ export class PantryPage implements OnInit, AfterViewInit {
     this.checkForExpiringItems();
     // MATT TESTING FOR GESTURES
     const gesture = this.gestureCtrl.create({
-      el: this.pantryList.nativeElement.closest('ion-content'),
+      el: this.pantryList.nativeElement,
       onStart: () => this.onStart(),
       onMove: (detail) => this.onMove(detail),
       onEnd: () => this.onEnd(),

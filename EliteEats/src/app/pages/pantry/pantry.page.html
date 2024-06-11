@@ -61,8 +61,10 @@
   </ion-card>
 
   <!-- Pantry is occupied card + categories -->
-  <div *ngIf="pantryIsOccupied">
-    <ion-list *ngFor="let category of categories" #pantryList>
+   <span #pantryList>
+  <div *ngIf="pantryIsOccupied" >
+    <span *ngFor="let category of categories">
+    <ion-list *ngIf="pantryHasCategory(category) && getItemsByCategory(category).length > 0">
       <ion-item-group *ngIf="pantryHasCategory(category)">
 
         <!--category dividers-->
@@ -92,7 +94,9 @@
 
       </ion-item-group>
     </ion-list>
+  </span>
   </div>
+  </span>
 
   <!-- Add button on bottom of page -->
   <ion-fab horizontal="center" vertical="bottom" slot="fixed">
