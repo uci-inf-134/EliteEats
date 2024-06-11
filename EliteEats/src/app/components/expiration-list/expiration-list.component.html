@@ -1,22 +1,24 @@
-<ion-card>
-  <ion-card-header>
-    <ion-card-title>
-      <ion-icon name="notifications" aria-hidden="true"></ion-icon>
-      Expiring Soon
-    </ion-card-title>
-  </ion-card-header>
-
-  <ion-card-content>
-    <ion-list *ngIf="expiringItems.length > 0">
-      <div *ngFor="let item of expiringItems">
-        <ion-item>
-            <div slot="start">{{item.name}}</div>
-            <div slot="end" style="font-size: smaller;">{{item.expirationToString()}}</div>
-            <ion-button slot="end" [color]="item.expColor"></ion-button>
-        </ion-item>
-      </div>
-    </ion-list>
-
-    <p *ngIf="expiringItems.length == 0">No soon-to-be expired items.</p>
-  </ion-card-content>
-</ion-card>
+<div scrollY="true" id='expirationList'>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        <ion-icon name="notifications" aria-hidden="true"></ion-icon>
+        Expiring Soon
+      </ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      <ion-list *ngIf="expiringItems.length > 0">
+        <div *ngFor="let item of expiringItems">
+          <ion-item>
+              <div slot="start">{{item.name}}</div>
+              <div slot="end" style="font-size: smaller;">{{item.expirationToString()}}</div>
+              <ion-button slot="end" [color]="item.expColor"></ion-button>
+          </ion-item>
+        </div>
+      </ion-list>
+  
+      <p *ngIf="expiringItems.length == 0">No soon-to-be expired items.</p>
+    </ion-card-content>
+  </ion-card>
+</div>

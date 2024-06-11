@@ -8,13 +8,14 @@
       <ion-col class="ion-text-center gx-0">
         <ion-button size="large" (mouseup)="deleteSelected()">Delete Items</ion-button>
         <ion-button size="large" (mouseup)="addSelectedtoShopping()">Add Items to Shopping List</ion-button>
+        <ion-button size="large" (mouseup)="addExpirationTracking(itemsSelected)">Track Items</ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>
 </div>
 
 <ion-header [translucent]="true">
-  <ion-toolbar>
+  <ion-toolbar> 
     <ion-title>Pantry</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -35,7 +36,7 @@
       <ion-button *ngIf="selectState == 'deselectAll'" (click)="selectAll(false)">
         <ion-icon name="checkbox-outline"></ion-icon>
         Deselect All</ion-button>
-      <ion-button (click)="addExpirationTracking(itemsSelected)">Track Expiration</ion-button>
+      <!-- <ion-button (click)="addExpirationTracking(itemsSelected)">Track Expiration</ion-button> -->
     </ion-buttons>
 </ion-toolbar>
 
