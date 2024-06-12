@@ -39,9 +39,14 @@ export class PantryService {
   }
 
   renewItem(item: FoodItem) {
+    console.log('test');
     if (this.pantryItems.has(item.category)) {
-      if (!this.pantryItems.get(item.category)!.find((pantryItem) => pantryItem.name == item.name)?.renewExpiration()) {
+      if (!this.pantryItems.get(item.category)!.find((pantryItem) => pantryItem.name == item.name)) {
         item.renewExpiration();
+        this.addPantryItem(item.category, item);
+        console.log('no');
+      }
+      else {
         this.addPantryItem(item.category, item);
       }
 

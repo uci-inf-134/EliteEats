@@ -129,8 +129,10 @@ export class ShoppingPage implements OnInit, AfterViewInit {
     this.shoppingList.forEach((item, i) => {
       if (this.selectedItems[i]) {
         this.shoppingService.renewItem(item);
-        this.shoppingList[i].renewExpiration();
+        // this.shoppingList[i].renewExpiration();
       }
     });
+
+    this.removeSelected();
   }
 }
